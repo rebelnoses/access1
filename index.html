@@ -2,9 +2,10 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>REBEL PARTY 2026</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -12,7 +13,7 @@ body {
   margin: 0;
   background: #050505;
   color: #eaeaea;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Barlow', sans-serif;
   overflow-x: hidden;
 }
 
@@ -35,27 +36,42 @@ body::before {
 .container {
   max-width: 700px;
   margin: auto;
-  padding: 60px 20px;
+  padding: 50px 20px;
   text-align: center;
 }
 
-/* texto */
-#typedText {
-  min-height: 300px;
-  line-height: 1.8;
-  white-space: pre-line;
+/* LOGO */
+#logo {
+  margin-top: 10px;
 }
 
-/* botón */
+#logo img {
+  width: 160px;
+  max-width: 60vw;
+  opacity: 1;
+}
+
+/* TEXTO INTRO */
+#typedText {
+  min-height: 280px;
+  line-height: 1.7;
+  white-space: pre-line;
+  font-size: 16px;
+}
+
+/* BOTÓN */
 #continueBtn {
-  margin-top: 40px;
+  margin-top: 30px;
   display: none;
   background: transparent;
   border: 1px solid #00ff88;
   color: #00ff88;
-  padding: 10px 25px;
+  padding: 12px 25px;
   cursor: pointer;
-  font-family: 'Orbitron';
+  font-family: 'Barlow', sans-serif;
+  letter-spacing: 1px;
+  width: 100%;
+  max-width: 260px;
 }
 
 #continueBtn:hover {
@@ -63,49 +79,80 @@ body::before {
   color: black;
 }
 
-/* acertijo */
+/* ACERTIJO CARD */
 #acertijo {
   display: none;
-  margin-top: 40px;
+  margin-top: 35px;
+  text-align: left;
+  padding: 20px 18px;
+  border: 1px solid rgba(0,255,136,0.4);
+  border-left: 4px solid #00ff88;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+  border-radius: 8px;
 }
 
-/* input */
+/* texto acertijo */
+#acertijo p {
+  margin: 10px 0;
+  font-size: 15px;
+  text-transform: none;
+}
+
+/* instrucción */
+#instruction {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #b5ffd9;
+  opacity: 0.9;
+}
+
+/* INPUT */
 #codeInput {
-  margin-top: 40px;
+  margin-top: 25px;
   background: transparent;
   border: none;
   border-bottom: 2px solid #00ff88;
   color: #00ff88;
-  font-size: 2rem;
-  letter-spacing: 12px;
+  font-size: 1.8rem;
+  letter-spacing: 10px;
   text-align: center;
   outline: none;
-  width: 300px;
+  width: 100%;
+  max-width: 280px;
+  display: block;
 }
 
-/* error */
+/* ERROR */
 .error {
   border-bottom: 2px solid red !important;
 }
 
-/* success */
+/* SUCCESS */
 #success {
   display: none;
   margin-top: 40px;
-  font-family: 'Orbitron';
+  font-family: 'Barlow', sans-serif;
   color: #00ff88;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  line-height: 1.6;
 }
 
-/* logo SIEMPRE visible */
-#logo {
-  margin-top: 20px;
-}
+/* MOBILE */
+@media (max-width: 600px) {
+  #typedText {
+    font-size: 15px;
+  }
 
-#logo img {
-  width: 180px;
-  opacity: 1;
-  transform: scale(1);
+  #acertijo {
+    padding: 16px;
+  }
+
+  #codeInput {
+    font-size: 1.5rem;
+    letter-spacing: 8px;
+  }
 }
 
 </style>
@@ -115,7 +162,7 @@ body::before {
 
 <div class="container">
 
-<!-- LOGO SIEMPRE VISIBLE -->
+<!-- LOGO -->
 <div id="logo">
   <img src="logo.png" alt="Rebel Party Logo">
 </div>
@@ -125,6 +172,7 @@ body::before {
 <button id="continueBtn">Continuar</button>
 
 <div id="acertijo">
+
 <p>Saber cambiar también es saber elegir.</p>
 <p>Observarse requiere más valor del que parece.</p>
 <p>Y no todos están preparados para hacerlo.</p>
@@ -134,11 +182,16 @@ body::before {
 <p>El detalle marcó la diferencia.</p>
 <p>La transformación habla por sí sola.</p>
 
+<div id="instruction">
+Escribe la palabra secreta en las líneas y pulsa ENTER para continuar.
+</div>
+
 <input type="text" id="codeInput" maxlength="8" placeholder="________">
+
 </div>
 
 <div id="success">
-Bienvenido.<br>
+Bienvenido.<br><br>
 Ahora sí.<br>
 Eres parte de REBEL PARTY 2026.
 </div>
@@ -180,28 +233,25 @@ function typeWriter() {
     i++;
     setTimeout(typeWriter, 25);
   } else {
-    continueBtn.style.display = "inline-block";
+    continueBtn.style.display = "block";
   }
 }
 
 typeWriter();
 
-/* CONTINUAR FUNCIONA */
+/* CONTINUAR */
 continueBtn.addEventListener("click", () => {
   acertijo.style.display = "block";
   continueBtn.style.display = "none";
 });
 
-/* ENTER validar */
+/* VALIDACIÓN */
 input.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
 
     if (input.value.toUpperCase() === "SOYREBEL") {
-
       success.style.display = "block";
-
     } else {
-
       input.classList.add("error");
 
       setTimeout(() => {
