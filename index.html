@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>REBEL PARTY 2026</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -17,28 +18,36 @@ body {
   overflow-x: hidden;
 }
 
+/* CONTENEDOR MOBILE-FIRST REAL */
 .container {
-  max-width: 700px;
-  margin: auto;
-  padding: 50px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
-/* LOGO */
+/* LOGO RESPONSIVE */
 #logo img {
-  width: 160px;
+  width: clamp(160px, 45vw, 240px);
+  margin-bottom: 18px;
 }
 
 /* TEXTO */
 #typedText {
-  min-height: 280px;
-  line-height: 1.7;
+  width: 100%;
+  min-height: 260px;
+  line-height: 1.6;
+  font-size: clamp(14px, 3.8vw, 16px);
   white-space: pre-line;
+  text-align: center;
 }
 
-/* BOTÓN */
+/* BOTÓN PERFECTAMENTE CENTRADO */
 #continueBtn {
-  margin-top: 30px;
+  margin-top: 24px;
   display: none;
   background: #FFD400;
   border: none;
@@ -49,71 +58,68 @@ body {
   border-radius: 6px;
 }
 
-/* ACERTIJO */
+/* ACERTIJO BLOQUE */
 #acertijo {
   display: none;
-  margin-top: 35px;
+  margin-top: 28px;
+  width: 100%;
   text-align: left;
-  padding: 20px;
+  padding: 18px;
   border-left: 5px solid #FFD400;
   background: rgba(255,212,0,0.08);
+  border-radius: 8px;
 }
 
-.first-letter {
-  font-weight: 700;
+/* frases */
+#acertijo p {
+  margin: 10px 0;
+  font-size: 14.5px;
+  line-height: 1.5;
 }
 
-/* INPUT */
+/* input PERFECTAMENTE ALINEADO */
 #codeInput {
-  margin-top: 20px;
+  margin-top: 18px;
+  width: 100%;
+  max-width: 260px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  background: transparent;
   border: none;
   border-bottom: 2px solid #FFD400;
-  background: transparent;
   color: #FFD400;
-  font-size: 1.8rem;
-  letter-spacing: 10px;
+
+  font-size: 1.6rem;
+  letter-spacing: 8px;
   text-align: center;
+  outline: none;
 }
 
-/* 🔥 PANTALLA FINAL */
+/* pantalla final */
 #access {
   position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:black;
-  color:#FFD400;
-  display:none;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  z-index:999;
-  padding:20px;
+  inset: 0;
+  background: #000;
+  color: #FFD400;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 999;
 }
 
 #access h1 {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   margin-bottom: 10px;
 }
 
 #access p {
-  opacity:0.9;
-  margin:5px 0;
-}
-
-/* FORM INVITACIÓN */
-#formBox {
-  margin-top: 25px;
-  width: 100%;
-  max-width: 400px;
-}
-
-iframe {
-  width: 100%;
-  height: 420px;
-  border: none;
+  margin: 4px 0;
+  opacity: 0.9;
 }
 
 </style>
@@ -133,14 +139,14 @@ iframe {
 
 <div id="acertijo">
 
-<p><span class="first-letter">S</span>aber cambiar también es saber elegir.</p>
-<p><span class="first-letter">O</span>bservarse requiere más valor del que parece.</p>
-<p><span class="first-letter">Y</span> no todos están preparados para hacerlo.</p>
-<p><span class="first-letter">R</span>efinaste lo que otros ni siquiera perciben.</p>
-<p><span class="first-letter">E</span>legiste verte como realmente querías.</p>
-<p><span class="first-letter">B</span>uscaste precisión, no casualidad.</p>
-<p><span class="first-letter">E</span>l detalle marcó la diferencia.</p>
-<p><span class="first-letter">L</span>a transformación habla por sí sola.</p>
+<p><b>S</b>aber cambiar también es saber elegir.</p>
+<p><b>O</b>bservarse requiere más valor del que parece.</p>
+<p><b>Y</b> no todos están preparados para hacerlo.</p>
+<p><b>R</b>efinaste lo que otros ni siquiera perciben.</p>
+<p><b>E</b>legiste verte como realmente querías.</p>
+<p><b>B</b>uscaste precisión, no casualidad.</p>
+<p><b>E</b>l detalle marcó la diferencia.</p>
+<p><b>L</b>a transformación habla por sí sola.</p>
 
 <input type="text" id="codeInput" maxlength="8" placeholder="________">
 
@@ -148,20 +154,10 @@ iframe {
 
 </div>
 
-<!-- 🔥 PANTALLA FINAL -->
 <div id="access">
-
 <h1>ACCESO AUTORIZADO.</h1>
 <p>Ahora sí.</p>
 <p>Bienvenido a la REBEL PARTY.</p>
-
-<div id="formBox">
-
-<!-- 👇 AQUÍ LUEGO PEGAS TU GOOGLE FORM -->
-<iframe src=""></iframe>
-
-</div>
-
 </div>
 
 <script>
@@ -184,34 +180,31 @@ const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
 const access = document.getElementById("access");
 
-let i=0;
+let i = 0;
 
 function typeWriter(){
-  if(i<text.length){
-    typedText.innerHTML+=text.charAt(i);
+  if(i < text.length){
+    typedText.innerHTML += text.charAt(i);
     i++;
-    setTimeout(typeWriter,20);
+    setTimeout(typeWriter, 34); /* ritmo optimizado móvil */
   } else {
-    setTimeout(()=>continueBtn.style.display="block",1000);
+    setTimeout(()=> continueBtn.style.display="block", 900);
   }
 }
 
-window.onload=typeWriter;
+window.onload = typeWriter;
 
 /* CONTINUAR */
-continueBtn.onclick=()=>{
-  acertijo.style.display="block";
-  continueBtn.style.display="none";
+continueBtn.onclick = () => {
+  acertijo.style.display = "block";
+  continueBtn.style.display = "none";
 };
 
 /* VALIDACIÓN */
 input.addEventListener("keypress",(e)=>{
   if(e.key==="Enter"){
     if(input.value.toUpperCase()==="SOYREBEL"){
-
-      /* pantalla final */
       access.style.display="flex";
-
     } else {
       input.value="";
     }
