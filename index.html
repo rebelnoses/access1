@@ -85,10 +85,9 @@ body::before {
   font-size: 15px;
 }
 
-/* primera letra (NUEVO NIVEL 2) */
+/* SOLO NEGRITA (NIVEL 3 LIMPIO) */
 .first-letter {
-  font-style: italic;
-  opacity: 0.9;
+  font-weight: 700;
 }
 
 /* instrucción */
@@ -154,7 +153,7 @@ body::before {
 <p><span class="first-letter">L</span>a transformación habla por sí sola.</p>
 
 <div id="instruction">
-Escribe la palabra secreta en las líneas y pulsa ENTER.
+Introduce la palabra secreta y pulsa ENTER.
 </div>
 
 <input type="text" id="codeInput" maxlength="8" placeholder="________">
@@ -196,22 +195,24 @@ const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
 const success = document.getElementById("success");
 
-/* 🔊 SONIDO REAL FIX */
+/* 🔊 TYPEWRITER REAL */
 let audioCtx;
-function initAudio() {
+
+function startAudio() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
 }
 
-function beep() {
+/* sonido máquina de escribir */
+function typeSound() {
   if (!audioCtx) return;
 
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
 
   osc.type = "square";
-  osc.frequency.value = 140 + Math.random() * 40;
+  osc.frequency.value = 180 + Math.random() * 60;
 
   gain.gain.value = 0.02;
 
@@ -219,7 +220,7 @@ function beep() {
   gain.connect(audioCtx.destination);
 
   osc.start();
-  osc.stop(audioCtx.currentTime + 0.03);
+  osc.stop(audioCtx.currentTime + 0.02);
 }
 
 let i = 0;
@@ -228,23 +229,21 @@ function typeWriter() {
 
   if (i < text.length) {
     typedText.innerHTML += text.charAt(i);
-    beep();
+    typeSound();
     i++;
-    setTimeout(typeWriter, 22);
+    setTimeout(typeWriter, 18);
   } else {
-
     setTimeout(() => {
       continueBtn.style.display = "block";
     }, 1000);
   }
 }
 
-/* 🔥 ACTIVACIÓN POR PRIMER TOQUE (FIX iOS/ANDROID) */
-document.addEventListener("click", () => {
-  initAudio();
-}, { once: true });
-
-typeWriter();
+/* 🔥 AUTO START AUDIO + TYPE */
+window.addEventListener("load", () => {
+  startAudio();
+  typeWriter();
+});
 
 /* CONTINUAR */
 continueBtn.addEventListener("click", () => {
