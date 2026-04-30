@@ -41,17 +41,12 @@ body::before {
 }
 
 /* LOGO */
-#logo {
-  margin-top: 10px;
-}
-
 #logo img {
   width: 160px;
   max-width: 60vw;
-  opacity: 1;
 }
 
-/* TEXTO INTRO */
+/* TEXTO */
 #typedText {
   min-height: 280px;
   line-height: 1.7;
@@ -59,44 +54,49 @@ body::before {
   font-size: 16px;
 }
 
-/* BOTÓN */
+/* BOTÓN CONTINUAR */
 #continueBtn {
   margin-top: 30px;
   display: none;
-  background: transparent;
-  border: 1px solid #00ff88;
-  color: #00ff88;
+  background: #FFD400;
+  border: none;
+  color: black;
   padding: 12px 25px;
   cursor: pointer;
-  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
   letter-spacing: 1px;
   width: 100%;
   max-width: 260px;
+  border-radius: 6px;
 }
 
 #continueBtn:hover {
-  background: #00ff88;
-  color: black;
+  background: #ffea70;
 }
 
-/* ACERTIJO CARD */
+/* ACERTIJO */
 #acertijo {
   display: none;
   margin-top: 35px;
   text-align: left;
   padding: 20px 18px;
-  border: 1px solid rgba(0,255,136,0.4);
-  border-left: 4px solid #00ff88;
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(6px);
-  border-radius: 8px;
+  border: 1px solid #FFD400;
+  border-left: 6px solid #FFD400;
+  background: rgba(255, 212, 0, 0.08);
+  border-radius: 10px;
 }
 
-/* texto acertijo */
+/* frases */
 #acertijo p {
   margin: 10px 0;
   font-size: 15px;
-  text-transform: none;
+}
+
+/* primera letra destacada */
+.first-letter {
+  font-weight: 800;
+  color: #FFD400;
+  font-size: 16px;
 }
 
 /* instrucción */
@@ -104,54 +104,36 @@ body::before {
   margin-top: 15px;
   margin-bottom: 20px;
   font-size: 14px;
-  color: #b5ffd9;
-  opacity: 0.9;
+  color: #ffd400;
 }
 
-/* INPUT */
+/* input */
 #codeInput {
-  margin-top: 25px;
+  margin-top: 20px;
   background: transparent;
   border: none;
-  border-bottom: 2px solid #00ff88;
-  color: #00ff88;
+  border-bottom: 2px solid #FFD400;
+  color: #FFD400;
   font-size: 1.8rem;
   letter-spacing: 10px;
   text-align: center;
   outline: none;
   width: 100%;
   max-width: 280px;
-  display: block;
 }
 
-/* ERROR */
-.error {
-  border-bottom: 2px solid red !important;
-}
-
-/* SUCCESS */
+/* success */
 #success {
   display: none;
   margin-top: 40px;
-  font-family: 'Barlow', sans-serif;
-  color: #00ff88;
+  color: #FFD400;
   font-size: 1.3rem;
-  line-height: 1.6;
 }
 
-/* MOBILE */
+/* mobile */
 @media (max-width: 600px) {
   #typedText {
     font-size: 15px;
-  }
-
-  #acertijo {
-    padding: 16px;
-  }
-
-  #codeInput {
-    font-size: 1.5rem;
-    letter-spacing: 8px;
   }
 }
 
@@ -162,28 +144,27 @@ body::before {
 
 <div class="container">
 
-<!-- LOGO -->
 <div id="logo">
   <img src="logo.png" alt="Rebel Party Logo">
 </div>
 
 <div id="typedText"></div>
 
-<button id="continueBtn">Continuar</button>
+<button id="continueBtn">CONTINUAR</button>
 
 <div id="acertijo">
 
-<p>Saber cambiar también es saber elegir.</p>
-<p>Observarse requiere más valor del que parece.</p>
-<p>Y no todos están preparados para hacerlo.</p>
-<p>Refinaste lo que otros ni siquiera perciben.</p>
-<p>Elegiste verte como realmente querías.</p>
-<p>Buscaste precisión, no casualidad.</p>
-<p>El detalle marcó la diferencia.</p>
-<p>La transformación habla por sí sola.</p>
+<p><span class="first-letter">S</span>aber cambiar también es saber elegir.</p>
+<p><span class="first-letter">O</span>bservarse requiere más valor del que parece.</p>
+<p><span class="first-letter">Y</span> no todos están preparados para hacerlo.</p>
+<p><span class="first-letter">R</span>efinaste lo que otros ni siquiera perciben.</p>
+<p><span class="first-letter">E</span>legiste verte como realmente querías.</p>
+<p><span class="first-letter">B</span>uscaste precisión, no casualidad.</p>
+<p><span class="first-letter">E</span>l detalle marcó la diferencia.</p>
+<p><span class="first-letter">L</span>a transformación habla por sí sola.</p>
 
 <div id="instruction">
-Escribe la palabra secreta en las líneas y pulsa ENTER para continuar.
+Escribe la palabra secreta en las líneas y pulsa ENTER.
 </div>
 
 <input type="text" id="codeInput" maxlength="8" placeholder="________">
@@ -191,7 +172,7 @@ Escribe la palabra secreta en las líneas y pulsa ENTER para continuar.
 </div>
 
 <div id="success">
-Bienvenido.<br><br>
+Bienvenido.<br>
 Ahora sí.<br>
 Eres parte de REBEL PARTY 2026.
 </div>
@@ -225,15 +206,42 @@ const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
 const success = document.getElementById("success");
 
+/* SONIDO TYPEWRITER */
+let audioCtx;
+function beep() {
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.frequency.value = 120;
+  gain.gain.value = 0.03;
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.03);
+}
+
 let i = 0;
 
 function typeWriter() {
+
+  if (i === 0) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
   if (i < text.length) {
     typedText.innerHTML += text.charAt(i);
+    beep();
     i++;
     setTimeout(typeWriter, 25);
   } else {
-    continueBtn.style.display = "block";
+
+    /* CONTINUAR 1s DESPUÉS */
+    setTimeout(() => {
+      continueBtn.style.display = "block";
+    }, 1000);
   }
 }
 
@@ -253,11 +261,7 @@ input.addEventListener("keypress", (e) => {
       success.style.display = "block";
     } else {
       input.classList.add("error");
-
-      setTimeout(() => {
-        input.classList.remove("error");
-      }, 500);
-
+      setTimeout(() => input.classList.remove("error"), 500);
       input.value = "";
     }
   }
