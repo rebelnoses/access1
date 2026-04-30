@@ -15,12 +15,6 @@ body {
   color: #eaeaea;
   font-family: 'Barlow', sans-serif;
   overflow-x: hidden;
-  opacity: 0;
-  animation: fadeIn 1.2s ease forwards;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
 }
 
 .container {
@@ -33,18 +27,6 @@ body {
 /* LOGO */
 #logo img {
   width: 160px;
-  transition: 0.3s;
-}
-
-/* GLITCH */
-.glitch {
-  animation: glitch 0.3s infinite;
-}
-
-@keyframes glitch {
-  0% { transform: translate(1px, -1px); }
-  50% { transform: translate(-1px, 1px); }
-  100% { transform: translate(1px, 1px); }
 }
 
 /* TEXTO */
@@ -64,6 +46,7 @@ body {
   padding: 12px;
   width: 100%;
   max-width: 260px;
+  border-radius: 6px;
 }
 
 /* ACERTIJO */
@@ -92,7 +75,7 @@ body {
   text-align: center;
 }
 
-/* ACCESS SCREEN */
+/* 🔥 PANTALLA FINAL */
 #access {
   position: fixed;
   top:0;
@@ -100,34 +83,43 @@ body {
   width:100%;
   height:100%;
   background:black;
-  color:#00ff88;
+  color:#FFD400;
   display:none;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  font-size:2rem;
+  text-align:center;
   z-index:999;
+  padding:20px;
 }
 
-/* FLASH */
-#flash {
-  position: fixed;
-  width:100%;
-  height:100%;
-  background:white;
-  opacity:0;
-  pointer-events:none;
+#access h1 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+#access p {
+  opacity:0.9;
+  margin:5px 0;
+}
+
+/* FORM INVITACIÓN */
+#formBox {
+  margin-top: 25px;
+  width: 100%;
+  max-width: 400px;
+}
+
+iframe {
+  width: 100%;
+  height: 420px;
+  border: none;
 }
 
 </style>
 </head>
 
 <body>
-
-<div id="flash"></div>
-
-<div id="access">
-ACCESS GRANTED
-</div>
 
 <div class="container">
 
@@ -156,6 +148,22 @@ ACCESS GRANTED
 
 </div>
 
+<!-- 🔥 PANTALLA FINAL -->
+<div id="access">
+
+<h1>ACCESO AUTORIZADO.</h1>
+<p>Ahora sí.</p>
+<p>Bienvenido a la REBEL PARTY.</p>
+
+<div id="formBox">
+
+<!-- 👇 AQUÍ LUEGO PEGAS TU GOOGLE FORM -->
+<iframe src=""></iframe>
+
+</div>
+
+</div>
+
 <script>
 
 const text = `No todos reciben esto.
@@ -170,39 +178,17 @@ Pero aún queda una prueba.
 
 Demuestra que sabes ver lo que otros no ven.`;
 
-
 const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
 const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
 const access = document.getElementById("access");
-const flash = document.getElementById("flash");
-const logo = document.querySelector("#logo img");
-
-/* AUDIO */
-let audioCtx;
-function initAudio(){
-  if(!audioCtx){
-    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-  }
-}
-
-function typeSound(){
-  if(!audioCtx) return;
-  const o=audioCtx.createOscillator();
-  const g=audioCtx.createGain();
-  o.frequency.value=180+Math.random()*40;
-  g.gain.value=0.02;
-  o.connect(g); g.connect(audioCtx.destination);
-  o.start(); o.stop(audioCtx.currentTime+0.02);
-}
 
 let i=0;
 
 function typeWriter(){
   if(i<text.length){
     typedText.innerHTML+=text.charAt(i);
-    typeSound();
     i++;
     setTimeout(typeWriter,20);
   } else {
@@ -210,14 +196,7 @@ function typeWriter(){
   }
 }
 
-/* START */
-window.onload=()=>{
-  initAudio();
-  typeWriter();
-};
-
-/* fallback audio */
-document.addEventListener("click", initAudio, {once:true});
+window.onload=typeWriter;
 
 /* CONTINUAR */
 continueBtn.onclick=()=>{
@@ -225,25 +204,13 @@ continueBtn.onclick=()=>{
   continueBtn.style.display="none";
 };
 
-/* VALIDACIÓN NIVEL 4 */
+/* VALIDACIÓN */
 input.addEventListener("keypress",(e)=>{
   if(e.key==="Enter"){
-
     if(input.value.toUpperCase()==="SOYREBEL"){
 
-      /* vibración */
-      if(navigator.vibrate) navigator.vibrate(200);
-
-      /* glitch logo */
-      logo.classList.add("glitch");
-
-      /* flash */
-      flash.style.opacity="1";
-      setTimeout(()=>flash.style.opacity="0",150);
-
-      setTimeout(()=>{
-        access.style.display="flex";
-      },500);
+      /* pantalla final */
+      access.style.display="flex";
 
     } else {
       input.value="";
