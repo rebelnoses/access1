@@ -14,7 +14,6 @@ body {
   background: #050505;
   color: #eaeaea;
   font-family: 'Barlow', sans-serif;
-  overflow-x: hidden;
 }
 
 .container {
@@ -38,7 +37,7 @@ body {
   white-space: pre-line;
 }
 
-/* BOTÓN */
+/* BOTÓN CONTINUAR */
 #continueBtn {
   margin: 25px auto 0;
   display: none;
@@ -67,27 +66,48 @@ body {
   font-size: 14.5px;
 }
 
-#acertijo b {
-  font-weight: 700;
+/* INSTRUCCIÓN */
+#instruction {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #FFD400;
 }
 
+/* INPUT */
 #codeInput {
-  margin-top: 18px;
+  margin-top: 15px;
   width: 100%;
   max-width: 260px;
   display: block;
-  margin: 18px auto 0;
+  margin-left: auto;
+  margin-right: auto;
+
   background: transparent;
   border: none;
   border-bottom: 2px solid #FFD400;
   color: #FFD400;
+
   font-size: 1.6rem;
   letter-spacing: 8px;
   text-align: center;
   outline: none;
 }
 
-/* 🔥 PANTALLA FINAL CINEMATOGRÁFICA */
+/* BOTÓN VALIDAR */
+#validateBtn {
+  margin: 18px auto 0;
+  display: block;
+  background: #FFD400;
+  border: none;
+  color: black;
+  padding: 12px;
+  width: 100%;
+  max-width: 260px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* PANTALLA FINAL */
 #access {
   position: fixed;
   inset: 0;
@@ -104,7 +124,7 @@ body {
   transition: opacity 1.2s ease;
 }
 
-/* flash */
+/* FLASH */
 #flash {
   position: fixed;
   inset: 0;
@@ -114,22 +134,9 @@ body {
   z-index: 998;
 }
 
-#access h1 {
-  font-size: 1.3rem;
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-#access p {
-  margin: 6px 0;
-  font-size: 14px;
-  opacity: 0;
-  transform: translateY(10px);
-}
-
+#access h1,
+#access p,
 #access h2 {
-  margin-top: 15px;
-  font-size: 1.2rem;
   opacity: 0;
   transform: translateY(10px);
 }
@@ -162,25 +169,23 @@ body {
 <p><b>E</b>l detalle marcó la diferencia.</p>
 <p><b>L</b>a transformación habla por sí sola.</p>
 
+<div id="instruction">Introduce la palabra secreta</div>
+
 <input type="text" id="codeInput" maxlength="8" placeholder="________">
 
-</div>
+<button id="validateBtn">VALIDAR</button>
 
 </div>
 
-<!-- 🔥 PANTALLA FINAL -->
+</div>
+
 <div id="access">
-
 <h1 id="t1">Correcto.</h1>
-
 <p id="t2">No era evidente.</p>
 <p id="t3">No era para todos.</p>
 <p id="t4">Pero tú lo has visto.</p>
-
 <p id="t5">Estás dentro.</p>
-
 <h2 id="t6">Bienvenido a la REBEL PARTY 2026</h2>
-
 </div>
 
 <script>
@@ -201,12 +206,12 @@ const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
 const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
+const validateBtn = document.getElementById("validateBtn");
 const access = document.getElementById("access");
 const flash = document.getElementById("flash");
 
 let i = 0;
 
-/* TYPEWRITER MÁS LENTO Y CINEMÁTICO */
 function typeWriter(){
   if(i < text.length){
     typedText.innerHTML += text.charAt(i);
@@ -225,45 +230,47 @@ continueBtn.onclick = () => {
   continueBtn.style.display = "none";
 };
 
-/* 🔥 CINEMÁTICA FINAL */
+/* FUNCIÓN VALIDAR */
+function validarCodigo(){
+  if(input.value.toUpperCase() === "SOYREBEL"){
+    showFinal();
+  } else {
+    input.value = "";
+  }
+}
+
+/* CLICK BOTÓN */
+validateBtn.onclick = validarCodigo;
+
+/* ENTER TAMBIÉN FUNCIONA */
+input.addEventListener("keypress", (e)=>{
+  if(e.key === "Enter"){
+    validarCodigo();
+  }
+});
+
+/* CINEMÁTICA FINAL */
 function showFinal(){
 
   access.style.display = "flex";
 
-  // flash impacto
   flash.style.opacity = "1";
   setTimeout(()=> flash.style.opacity = "0", 200);
 
-  // vibración móvil
   if(navigator.vibrate) navigator.vibrate(200);
 
-  // fade in pantalla
   setTimeout(()=> access.style.opacity = "1", 200);
 
-  // aparición escalonada textos
-  const items = [
-    "t1","t2","t3","t4","t5","t6"
-  ];
+  const items = ["t1","t2","t3","t4","t5","t6"];
 
   items.forEach((id, index)=>{
     setTimeout(()=>{
       const el = document.getElementById(id);
       el.style.opacity = "1";
       el.style.transform = "translateY(0)";
-    }, 500 + index * 450);
+    }, 500 + index * 400);
   });
 }
-
-/* VALIDACIÓN */
-input.addEventListener("keypress",(e)=>{
-  if(e.key==="Enter"){
-    if(input.value.toUpperCase()==="SOYREBEL"){
-      showFinal();
-    } else {
-      input.value="";
-    }
-  }
-});
 
 </script>
 
