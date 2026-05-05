@@ -81,12 +81,10 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
-
   background: transparent;
   border: none;
   border-bottom: 2px solid #FFD400;
   color: #FFD400;
-
   font-size: 1.6rem;
   letter-spacing: 8px;
   text-align: center;
@@ -107,46 +105,52 @@ body {
   font-weight: 600;
 }
 
-/* PANTALLA FINAL */
-#access {
+/* PANTALLA FINAL CON IMAGEN */
+#finalScreen {
   position: fixed;
   inset: 0;
-  background: #000;
-  color: #FFD400;
+  background: url("lugar.jpg") center/cover no-repeat;
   display: none;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  z-index: 999;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 1.2s ease;
 }
 
-/* FLASH */
-#flash {
-  position: fixed;
+#finalScreen .overlay {
+  position: absolute;
   inset: 0;
-  background: white;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 998;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
 }
 
-#access h1,
-#access p,
-#access h2 {
+.finalContent {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.line {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(15px);
+  transition: all 0.8s ease;
+  margin: 10px 0;
+}
+
+.highlight {
+  margin: 20px 0;
+  font-size: 28px;
+  color: #FFD400;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.8s ease;
 }
 
 </style>
 </head>
 
 <body>
-
-<div id="flash"></div>
 
 <div class="container">
 
@@ -160,14 +164,14 @@ body {
 
 <div id="acertijo">
 
-<p><b>S</b>aber cambiar también es saber elegir.</p>
-<p><b>O</b>bservarse requiere más valor del que parece.</p>
-<p><b>Y</b> no todos están preparados para hacerlo.</p>
-<p><b>R</b>efinaste lo que otros ni siquiera perciben.</p>
-<p><b>E</b>legiste verte como realmente querías.</p>
-<p><b>B</b>uscaste precisión, no casualidad.</p>
-<p><b>E</b>l detalle marcó la diferencia.</p>
-<p><b>L</b>a transformación habla por sí sola.</p>
+<p><b>S</b>olo quienes se atreven a cambiar, avanzan.</p>
+<p><b>O</b>bservar no es mirar… es entender.</p>
+<p><b>Y</b> tú ya has demostrado que sabes hacerlo.</p>
+<p><b>R</b>ompiste con lo común.</p>
+<p><b>E</b>legiste ir un paso más allá.</p>
+<p><b>B</b>uscaste algo distinto.</p>
+<p><b>E</b>ncontraste lo que otros ni ven.</p>
+<p><b>L</b>o hiciste sin que nadie te lo dijera.</p>
 
 <div id="instruction">Introduce la palabra secreta</div>
 
@@ -179,13 +183,20 @@ body {
 
 </div>
 
-<div id="access">
-<h1 id="t1">Correcto.</h1>
-<p id="t2">No era evidente.</p>
-<p id="t3">No era para todos.</p>
-<p id="t4">Pero tú lo has visto.</p>
-<p id="t5">Estás dentro.</p>
-<h2 id="t6">Bienvenido a la REBEL PARTY 2026</h2>
+<!-- PANTALLA FINAL -->
+<div id="finalScreen">
+  <div class="overlay"></div>
+  <div class="finalContent">
+    <p class="line">Acceso confirmado.</p>
+    <p class="line">No era para todos.</p>
+    <p class="line">Pero tú has llegado.</p>
+
+    <h2 class="highlight">Estás invitado.</h2>
+
+    <p class="line">Elige bien con quién compartirlo.</p>
+    <p class="line">09 · OCTUBRE</p>
+    <p class="line">Pronto recibirás los detalles finales.</p>
+  </div>
 </div>
 
 <script>
@@ -202,13 +213,12 @@ Pero aún queda una prueba.
 
 Demuestra que sabes ver lo que otros no ven.`;
 
+
 const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
 const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
 const validateBtn = document.getElementById("validateBtn");
-const access = document.getElementById("access");
-const flash = document.getElementById("flash");
 
 let i = 0;
 
@@ -230,46 +240,37 @@ continueBtn.onclick = () => {
   continueBtn.style.display = "none";
 };
 
-/* FUNCIÓN VALIDAR */
+/* VALIDACIÓN */
 function validarCodigo(){
   if(input.value.toUpperCase() === "SOYREBEL"){
-    showFinal();
+    mostrarPantallaFinal();
   } else {
     input.value = "";
   }
 }
 
-/* CLICK BOTÓN */
 validateBtn.onclick = validarCodigo;
 
-/* ENTER TAMBIÉN FUNCIONA */
 input.addEventListener("keypress", (e)=>{
   if(e.key === "Enter"){
     validarCodigo();
   }
 });
 
-/* CINEMÁTICA FINAL */
-function showFinal(){
+/* PANTALLA FINAL */
+function mostrarPantallaFinal(){
 
-  access.style.display = "flex";
+  document.getElementById("finalScreen").style.display = "flex";
 
-  flash.style.opacity = "1";
-  setTimeout(()=> flash.style.opacity = "0", 200);
+  const elementos = document.querySelectorAll(".line, .highlight");
 
-  if(navigator.vibrate) navigator.vibrate(200);
-
-  setTimeout(()=> access.style.opacity = "1", 200);
-
-  const items = ["t1","t2","t3","t4","t5","t6"];
-
-  items.forEach((id, index)=>{
-    setTimeout(()=>{
-      const el = document.getElementById(id);
+  elementos.forEach((el, i) => {
+    setTimeout(() => {
       el.style.opacity = "1";
       el.style.transform = "translateY(0)";
-    }, 500 + index * 400);
+    }, i * 700);
   });
+
 }
 
 </script>
