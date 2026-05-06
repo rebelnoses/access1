@@ -22,9 +22,10 @@ body {
   margin: auto;
   padding: 40px 18px;
   text-align: center;
+  transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-/* LOGO MÁS GRANDE */
+/* LOGO */
 #logo img {
   width: clamp(220px, 65vw, 320px);
   margin-bottom: 20px;
@@ -38,10 +39,9 @@ body {
   white-space: pre-line;
 }
 
-/* BOTÓN */
-#continueBtn {
-  margin: 25px auto 0;
-  display: none;
+/* BOTONES */
+button {
+  margin-top: 20px;
   background: #FFD400;
   border: none;
   color: black;
@@ -49,6 +49,7 @@ body {
   width: 100%;
   max-width: 260px;
   border-radius: 6px;
+  font-weight: 600;
 }
 
 /* ACERTIJO */
@@ -67,19 +68,11 @@ body {
   font-size: 14.5px;
 }
 
-/* INSTRUCCIÓN */
-#instruction {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #FFD400;
-}
-
 /* INPUT */
 #codeInput {
   margin-top: 15px;
   width: 100%;
   max-width: 260px;
-  display: block;
   margin-left: auto;
   margin-right: auto;
   background: transparent;
@@ -92,40 +85,35 @@ body {
   outline: none;
 }
 
-/* BOTÓN VALIDAR */
-#validateBtn {
-  margin: 18px auto 0;
-  display: block;
-  background: #FFD400;
-  border: none;
-  color: black;
-  padding: 12px;
-  width: 100%;
-  max-width: 260px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-/* PANTALLA FINAL CON IMAGEN */
+/* FINAL SCREEN */
 #access {
   position: fixed;
   inset: 0;
-  background: url('lugar.jpg') center/cover no-repeat;
   display: none;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
-/* overlay oscuro */
-#access::before {
-  content: "";
+/* FONDO CON MÁS PRESENCIA */
+#bg {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(6px);
+  background: url('lugar.jpg') center/cover no-repeat;
+  filter: blur(8px) brightness(0.6);
+  transform: scale(1.1);
+  opacity: 0;
+  transition: opacity 1.2s ease;
 }
 
-/* contenido */
+/* OVERLAY */
+#overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+
+/* CONTENIDO FINAL */
 #accessContent {
   position: relative;
   color: #FFD400;
@@ -134,14 +122,35 @@ body {
   max-width: 500px;
 }
 
-#accessContent h1 {
-  font-size: 1.4rem;
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h1 {
+  font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
-#accessContent p {
+p {
   margin: 8px 0;
-  font-size: 14.5px;
+  font-size: 15px;
+}
+
+/* FLASH */
+#flash {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
 }
 
 </style>
@@ -149,7 +158,9 @@ body {
 
 <body>
 
-<div class="container">
+<div id="flash"></div>
+
+<div class="container" id="main">
 
 <div id="logo">
 <img src="logo.png">
@@ -157,7 +168,7 @@ body {
 
 <div id="typedText"></div>
 
-<button id="continueBtn">CONTINUAR</button>
+<button id="continueBtn" style="display:none;">CONTINUAR</button>
 
 <div id="acertijo">
 
@@ -170,7 +181,7 @@ body {
 <p><b>E</b>l cambio no fue casualidad.</p>
 <p><b>L</b>o hiciste porque sabías que era para ti.</p>
 
-<div id="instruction">Introduce la palabra secreta</div>
+<p style="margin-top:15px; color:#FFD400;">Introduce la palabra secreta</p>
 
 <input type="text" id="codeInput" maxlength="8" placeholder="________">
 
@@ -182,23 +193,28 @@ body {
 
 <!-- FINAL -->
 <div id="access">
-  <div id="accessContent">
-    <h1>ENHORABUENA.</h1>
+<div id="bg"></div>
+<div id="overlay"></div>
 
-    <p>No todo el mundo llega hasta aquí.</p>
-    <p>No todo el mundo se atreve a dar el paso.</p>
+<div id="accessContent">
 
-    <p>Pero tú sí.</p>
+<h1 class="reveal">🔥 ENHORABUENA</h1>
 
-    <p>Has tomado el control. Has decidido verte como querías.</p>
+<p class="reveal">No todo el mundo llega hasta aquí.</p>
+<p class="reveal">No todo el mundo se atreve.</p>
 
-    <p><b>Tienes tu sitio asegurado en la REBEL PARTY 2026.</b></p>
+<p class="reveal">Pero tú sí.</p>
 
-    <p>📍 Barbillon, Marbella</p>
-    <p>📅 9 de octubre</p>
+<p class="reveal">Has decidido verte como realmente querías.</p>
 
-    <p>Ve pensando con quién vas a compartir este día.</p>
-  </div>
+<p class="reveal"><b>Tienes tu sitio asegurado en la REBEL PARTY 2026</b></p>
+
+<p class="reveal">📍 Barbillon, Marbella</p>
+<p class="reveal">📅 9 de octubre</p>
+
+<p class="reveal">Ve pensando con quién vas a vivirlo.</p>
+
+</div>
 </div>
 
 <script>
@@ -207,19 +223,11 @@ const text = `No todos llegan hasta aquí.
 
 Ni todos se atreven.
 
-Durante un tiempo hemos estado observando.
-No buscamos a cualquiera.
-
 Buscamos a los que deciden.
-A los que no se conforman.
-A los que se atreven a verse como realmente quieren.
 
 Si estás aquí… ya has sido más atrevido que el resto.
 
-Pero aún queda un paso.
-
-Demuestra que sigues viendo lo que otros no ven.`;
-
+Pero aún queda un paso.`;
 
 const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
@@ -227,6 +235,9 @@ const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
 const validateBtn = document.getElementById("validateBtn");
 const access = document.getElementById("access");
+const bg = document.getElementById("bg");
+const flash = document.getElementById("flash");
+const main = document.getElementById("main");
 
 let i = 0;
 
@@ -242,20 +253,47 @@ function typeWriter(){
 
 window.onload = typeWriter;
 
-/* CONTINUAR */
 continueBtn.onclick = () => {
   acertijo.style.display = "block";
   continueBtn.style.display = "none";
 };
 
-/* VALIDAR */
 validateBtn.onclick = () => {
   if(input.value.toUpperCase() === "SOYREBEL"){
-    access.style.display = "flex";
+    showFinal();
   } else {
     input.value = "";
   }
 };
+
+function showFinal(){
+
+  // salida escena actual
+  main.style.transform = "scale(1.05)";
+  main.style.opacity = "0";
+
+  // flash
+  flash.style.opacity = "1";
+  setTimeout(()=> flash.style.opacity="0",200);
+
+  // vibración
+  if(navigator.vibrate) navigator.vibrate(200);
+
+  setTimeout(()=>{
+    access.style.display = "flex";
+    bg.style.opacity = "1";
+
+    // animar textos
+    const items = document.querySelectorAll(".reveal");
+
+    items.forEach((el, index)=>{
+      setTimeout(()=>{
+        el.classList.add("show");
+      }, 400 + index * 300);
+    });
+
+  }, 400);
+}
 
 </script>
 
