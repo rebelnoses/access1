@@ -2,10 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>REBEL PARTY 2026</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
 
@@ -13,138 +12,100 @@ body {
   margin: 0;
   background: #050505;
   color: #eaeaea;
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Share Tech Mono', monospace;
+  overflow-x: hidden;
+}
+
+/* scan effect */
+body::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.02),
+    rgba(255,255,255,0.02) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 700px;
   margin: auto;
-  padding: 40px 18px;
+  padding: 60px 20px;
   text-align: center;
 }
 
-/* LOGO */
-#logo img {
-  width: clamp(170px, 50vw, 240px);
-  margin-bottom: 15px;
-}
-
-/* TEXTO */
+/* texto */
 #typedText {
-  min-height: 260px;
-  line-height: 1.6;
-  font-size: 15px;
+  min-height: 300px;
+  line-height: 1.8;
   white-space: pre-line;
 }
 
-/* BOTÓN CONTINUAR */
+/* botón */
 #continueBtn {
-  margin: 25px auto 0;
+  margin-top: 40px;
   display: none;
-  background: #FFD400;
-  border: none;
-  color: black;
-  padding: 12px;
-  width: 100%;
-  max-width: 260px;
-  border-radius: 6px;
+  background: transparent;
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-family: 'Orbitron';
 }
 
-/* ACERTIJO */
+#continueBtn:hover {
+  background: #00ff88;
+  color: black;
+}
+
+/* acertijo */
 #acertijo {
   display: none;
-  margin-top: 30px;
-  text-align: left;
-  padding: 18px;
-  border-left: 5px solid #FFD400;
-  background: rgba(255,212,0,0.08);
-  border-radius: 8px;
+  margin-top: 40px;
 }
 
-#acertijo p {
-  margin: 10px 0;
-  font-size: 14.5px;
-}
-
-/* INSTRUCCIÓN */
-#instruction {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #FFD400;
-}
-
-/* INPUT */
+/* input */
 #codeInput {
-  margin-top: 15px;
-  width: 100%;
-  max-width: 260px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 40px;
   background: transparent;
   border: none;
-  border-bottom: 2px solid #FFD400;
-  color: #FFD400;
-  font-size: 1.6rem;
-  letter-spacing: 8px;
+  border-bottom: 2px solid #00ff88;
+  color: #00ff88;
+  font-size: 2rem;
+  letter-spacing: 12px;
   text-align: center;
   outline: none;
+  width: 300px;
 }
 
-/* BOTÓN VALIDAR */
-#validateBtn {
-  margin: 18px auto 0;
-  display: block;
-  background: #FFD400;
-  border: none;
-  color: black;
-  padding: 12px;
-  width: 100%;
-  max-width: 260px;
-  border-radius: 6px;
-  font-weight: 600;
+/* error */
+.error {
+  border-bottom: 2px solid red !important;
 }
 
-/* PANTALLA FINAL CON IMAGEN */
-#finalScreen {
-  position: fixed;
-  inset: 0;
-  background: url("lugar.jpg") center/cover no-repeat;
+/* success */
+#success {
   display: none;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  margin-top: 40px;
+  font-family: 'Orbitron';
+  color: #00ff88;
+  font-size: 1.5rem;
 }
 
-#finalScreen .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(6px);
+/* logo SIEMPRE visible */
+#logo {
+  margin-top: 20px;
 }
 
-.finalContent {
-  position: relative;
-  z-index: 2;
-  color: #fff;
-  max-width: 500px;
-  padding: 20px;
-}
-
-.line {
-  opacity: 0;
-  transform: translateY(15px);
-  transition: all 0.8s ease;
-  margin: 10px 0;
-}
-
-.highlight {
-  margin: 20px 0;
-  font-size: 28px;
-  color: #FFD400;
-  opacity: 0;
-  transform: translateY(15px);
-  transition: all 0.8s ease;
+#logo img {
+  width: 180px;
+  opacity: 1;
+  transform: scale(1);
 }
 
 </style>
@@ -154,124 +115,103 @@ body {
 
 <div class="container">
 
+<!-- LOGO SIEMPRE VISIBLE -->
 <div id="logo">
-<img src="logo.png">
+  <img src="logo.png" alt="Rebel Party Logo">
 </div>
 
 <div id="typedText"></div>
 
-<button id="continueBtn">CONTINUAR</button>
+<button id="continueBtn">Continuar</button>
 
 <div id="acertijo">
-
-<p><b>S</b>olo quienes se atreven a cambiar, avanzan.</p>
-<p><b>O</b>bservar no es mirar… es entender.</p>
-<p><b>Y</b> tú ya has demostrado que sabes hacerlo.</p>
-<p><b>R</b>ompiste con lo común.</p>
-<p><b>E</b>legiste ir un paso más allá.</p>
-<p><b>B</b>uscaste algo distinto.</p>
-<p><b>E</b>ncontraste lo que otros ni ven.</p>
-<p><b>L</b>o hiciste sin que nadie te lo dijera.</p>
-
-<div id="instruction">Introduce la palabra secreta</div>
+<p>Saber cambiar también es saber elegir.</p>
+<p>Observarse requiere más valor del que parece.</p>
+<p>Y no todos están preparados para hacerlo.</p>
+<p>Refinaste lo que otros ni siquiera perciben.</p>
+<p>Elegiste verte como realmente querías.</p>
+<p>Buscaste precisión, no casualidad.</p>
+<p>El detalle marcó la diferencia.</p>
+<p>La transformación habla por sí sola.</p>
 
 <input type="text" id="codeInput" maxlength="8" placeholder="________">
-
-<button id="validateBtn">VALIDAR</button>
-
 </div>
 
+<div id="success">
+Bienvenido.<br>
+Ahora sí.<br>
+Eres parte de REBEL PARTY 2026.
 </div>
 
-<!-- PANTALLA FINAL -->
-<div id="finalScreen">
-  <div class="overlay"></div>
-  <div class="finalContent">
-    <p class="line">Acceso confirmado.</p>
-    <p class="line">No era para todos.</p>
-    <p class="line">Pero tú has llegado.</p>
-
-    <h2 class="highlight">Estás invitado.</h2>
-
-    <p class="line">Elige bien con quién compartirlo.</p>
-    <p class="line">09 · OCTUBRE</p>
-    <p class="line">Pronto recibirás los detalles finales.</p>
-  </div>
 </div>
 
 <script>
 
 const text = `No todos reciben esto.
+No todos están preparados para entenderlo.
 
-Hemos estado observando.
-
+Durante un tiempo hemos estado observando.
 No buscamos a cualquiera.
 
-Si estás aquí, ya has pasado el primer filtro.
+Buscamos precisión.
+Personas que ya han pasado por un proceso.
+Personas que han sabido elegir.
 
-Pero aún queda una prueba.
+Si estás aquí… ya has demostrado más que la mayoría.
 
-Demuestra que sabes ver lo que otros no ven.`;
+Pero aún queda un paso.
 
+Demuestra que sigues viendo lo que otros no ven.
+
+La respuesta está aquí.
+Siempre lo ha estado.`;
 
 const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
 const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
-const validateBtn = document.getElementById("validateBtn");
+const success = document.getElementById("success");
 
 let i = 0;
 
-function typeWriter(){
-  if(i < text.length){
+function typeWriter() {
+  if (i < text.length) {
     typedText.innerHTML += text.charAt(i);
     i++;
-    setTimeout(typeWriter, 36);
+    setTimeout(typeWriter, 25);
   } else {
-    setTimeout(()=> continueBtn.style.display="block", 1200);
+    continueBtn.style.display = "inline-block";
   }
 }
 
-window.onload = typeWriter;
+typeWriter();
 
-/* CONTINUAR */
-continueBtn.onclick = () => {
+/* CONTINUAR FUNCIONA */
+continueBtn.addEventListener("click", () => {
   acertijo.style.display = "block";
   continueBtn.style.display = "none";
-};
-
-/* VALIDACIÓN */
-function validarCodigo(){
-  if(input.value.toUpperCase() === "SOYREBEL"){
-    mostrarPantallaFinal();
-  } else {
-    input.value = "";
-  }
-}
-
-validateBtn.onclick = validarCodigo;
-
-input.addEventListener("keypress", (e)=>{
-  if(e.key === "Enter"){
-    validarCodigo();
-  }
 });
 
-/* PANTALLA FINAL */
-function mostrarPantallaFinal(){
+/* ENTER validar */
+input.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
 
-  document.getElementById("finalScreen").style.display = "flex";
+    if (input.value.toUpperCase() === "SOYREBEL") {
 
-  const elementos = document.querySelectorAll(".line, .highlight");
+      success.style.display = "block";
 
-  elementos.forEach((el, i) => {
-    setTimeout(() => {
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
-    }, i * 700);
-  });
+    } else {
 
-}
+      input.classList.add("error");
+
+      setTimeout(() => {
+        input.classList.remove("error");
+      }, 500);
+
+      input.value = "";
+    }
+  }
+});
 
 </script>
 
