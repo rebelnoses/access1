@@ -22,7 +22,6 @@ body {
   margin: auto;
   padding: 40px 18px;
   text-align: center;
-  transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
 /* LOGO */
@@ -39,9 +38,10 @@ body {
   white-space: pre-line;
 }
 
-/* BOTONES */
-button {
-  margin-top: 20px;
+/* BOTÓN CENTRADO */
+#continueBtn {
+  margin: 25px auto 0;
+  display: none;
   background: #FFD400;
   border: none;
   color: black;
@@ -49,7 +49,7 @@ button {
   width: 100%;
   max-width: 260px;
   border-radius: 6px;
-  font-weight: 600;
+  display: block;
 }
 
 /* ACERTIJO */
@@ -85,62 +85,18 @@ button {
   outline: none;
 }
 
-/* FINAL SCREEN */
-#access {
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* FONDO CON MÁS PRESENCIA */
-#bg {
-  position: absolute;
-  inset: 0;
-  background: url('lugar.jpg') center/cover no-repeat;
-  filter: blur(8px) brightness(0.6);
-  transform: scale(1.1);
-  opacity: 0;
-  transition: opacity 1.2s ease;
-}
-
-/* OVERLAY */
-#overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-}
-
-/* CONTENIDO FINAL */
-#accessContent {
-  position: relative;
-  color: #FFD400;
-  text-align: center;
-  padding: 20px;
-  max-width: 500px;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease;
-}
-
-.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-h1 {
-  font-size: 1.6rem;
-  margin-bottom: 10px;
-}
-
-p {
-  margin: 8px 0;
-  font-size: 15px;
+/* BOTÓN VALIDAR */
+#validateBtn {
+  margin: 18px auto 0;
+  display: block;
+  background: #FFD400;
+  border: none;
+  color: black;
+  padding: 12px;
+  width: 100%;
+  max-width: 260px;
+  border-radius: 6px;
+  font-weight: 600;
 }
 
 /* FLASH */
@@ -151,6 +107,62 @@ p {
   opacity: 0;
   pointer-events: none;
   z-index: 999;
+}
+
+/* FINAL */
+#access {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* FONDO MÁS CLARO */
+#bg {
+  position: absolute;
+  inset: 0;
+  background: url('lugar.jpg') center/cover no-repeat;
+  filter: blur(4px) brightness(0.75);
+  transform: scale(1.05);
+}
+
+/* OVERLAY */
+#overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+/* CONTENIDO */
+#accessContent {
+  position: relative;
+  text-align: center;
+  color: #FFD400;
+  max-width: 500px;
+  padding: 20px;
+}
+
+/* ENHORABUENA ANIMADA */
+#bigTitle {
+  font-size: 3rem;
+  transform: scale(3);
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+#bigTitle.show {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* TEXTO TYPEWRITER FINAL */
+#finalText {
+  margin-top: 20px;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-line;
 }
 
 </style>
@@ -168,7 +180,7 @@ p {
 
 <div id="typedText"></div>
 
-<button id="continueBtn" style="display:none;">CONTINUAR</button>
+<button id="continueBtn">CONTINUAR</button>
 
 <div id="acertijo">
 
@@ -197,23 +209,8 @@ p {
 <div id="overlay"></div>
 
 <div id="accessContent">
-
-<h1 class="reveal">🔥 ENHORABUENA</h1>
-
-<p class="reveal">No todo el mundo llega hasta aquí.</p>
-<p class="reveal">No todo el mundo se atreve.</p>
-
-<p class="reveal">Pero tú sí.</p>
-
-<p class="reveal">Has decidido verte como realmente querías.</p>
-
-<p class="reveal"><b>Tienes tu sitio asegurado en la REBEL PARTY 2026</b></p>
-
-<p class="reveal">📍 Barbillon, Marbella</p>
-<p class="reveal">📅 9 de octubre</p>
-
-<p class="reveal">Ve pensando con quién vas a vivirlo.</p>
-
+<h1 id="bigTitle">ENHORABUENA</h1>
+<div id="finalText"></div>
 </div>
 </div>
 
@@ -223,24 +220,49 @@ const text = `No todos llegan hasta aquí.
 
 Ni todos se atreven.
 
+Durante un tiempo hemos estado observando.
+No buscamos a cualquiera.
+
 Buscamos a los que deciden.
+A los que no se conforman.
+A los que se atreven a verse como realmente quieren.
 
 Si estás aquí… ya has sido más atrevido que el resto.
 
-Pero aún queda un paso.`;
+Pero aún queda un paso.
+
+Demuestra que sigues viendo lo que otros no ven`;
+
+const finalMessage = `No todo el mundo llega hasta aquí.
+No todo el mundo se atreve.
+
+Pero tú sí.
+
+Has decidido verte como realmente querías.
+
+Tienes tu sitio asegurado en la REBEL PARTY 2026.
+
+📍 Barbillon, Marbella
+📅 9 de octubre
+
+Ve pensando con quién vas a vivirlo.`;
 
 const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
 const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
 const validateBtn = document.getElementById("validateBtn");
+
 const access = document.getElementById("access");
-const bg = document.getElementById("bg");
 const flash = document.getElementById("flash");
 const main = document.getElementById("main");
 
+const bigTitle = document.getElementById("bigTitle");
+const finalText = document.getElementById("finalText");
+
 let i = 0;
 
+/* TYPEWRITER INICIAL */
 function typeWriter(){
   if(i < text.length){
     typedText.innerHTML += text.charAt(i);
@@ -253,11 +275,13 @@ function typeWriter(){
 
 window.onload = typeWriter;
 
+/* CONTINUAR */
 continueBtn.onclick = () => {
   acertijo.style.display = "block";
   continueBtn.style.display = "none";
 };
 
+/* VALIDAR */
 validateBtn.onclick = () => {
   if(input.value.toUpperCase() === "SOYREBEL"){
     showFinal();
@@ -266,33 +290,35 @@ validateBtn.onclick = () => {
   }
 };
 
+/* FINAL CINEMÁTICO */
 function showFinal(){
 
-  // salida escena actual
-  main.style.transform = "scale(1.05)";
   main.style.opacity = "0";
 
-  // flash
   flash.style.opacity = "1";
   setTimeout(()=> flash.style.opacity="0",200);
 
-  // vibración
-  if(navigator.vibrate) navigator.vibrate(200);
-
   setTimeout(()=>{
     access.style.display = "flex";
-    bg.style.opacity = "1";
 
-    // animar textos
-    const items = document.querySelectorAll(".reveal");
+    /* animación ENHORABUENA */
+    setTimeout(()=>{
+      bigTitle.classList.add("show");
+    },300);
 
-    items.forEach((el, index)=>{
-      setTimeout(()=>{
-        el.classList.add("show");
-      }, 400 + index * 300);
-    });
+    /* escribir texto final */
+    let j = 0;
+    function writeFinal(){
+      if(j < finalMessage.length){
+        finalText.innerHTML += finalMessage.charAt(j);
+        j++;
+        setTimeout(writeFinal, 28);
+      }
+    }
 
-  }, 400);
+    setTimeout(writeFinal, 1200);
+
+  },400);
 }
 
 </script>
