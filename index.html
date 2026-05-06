@@ -16,6 +16,7 @@ body {
   font-family: 'Barlow', sans-serif;
 }
 
+/* CONTENEDOR */
 .container {
   max-width: 600px;
   margin: auto;
@@ -23,10 +24,10 @@ body {
   text-align: center;
 }
 
-/* LOGO */
+/* LOGO MÁS GRANDE */
 #logo img {
-  width: clamp(170px, 50vw, 240px);
-  margin-bottom: 15px;
+  width: clamp(220px, 65vw, 320px);
+  margin-bottom: 20px;
 }
 
 /* TEXTO */
@@ -37,7 +38,7 @@ body {
   white-space: pre-line;
 }
 
-/* BOTÓN CONTINUAR */
+/* BOTÓN */
 #continueBtn {
   margin: 25px auto 0;
   display: none;
@@ -81,12 +82,10 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
-
   background: transparent;
   border: none;
   border-bottom: 2px solid #FFD400;
   color: #FFD400;
-
   font-size: 1.6rem;
   letter-spacing: 8px;
   text-align: center;
@@ -107,46 +106,48 @@ body {
   font-weight: 600;
 }
 
-/* PANTALLA FINAL */
+/* PANTALLA FINAL CON IMAGEN */
 #access {
   position: fixed;
   inset: 0;
-  background: #000;
-  color: #FFD400;
+  background: url('lugar.jpg') center/cover no-repeat;
   display: none;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  z-index: 999;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 1.2s ease;
 }
 
-/* FLASH */
-#flash {
-  position: fixed;
+/* overlay oscuro */
+#access::before {
+  content: "";
+  position: absolute;
   inset: 0;
-  background: white;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 998;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
 }
 
-#access h1,
-#access p,
-#access h2 {
-  opacity: 0;
-  transform: translateY(10px);
+/* contenido */
+#accessContent {
+  position: relative;
+  color: #FFD400;
+  text-align: center;
+  padding: 20px;
+  max-width: 500px;
+}
+
+#accessContent h1 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+#accessContent p {
+  margin: 8px 0;
+  font-size: 14.5px;
 }
 
 </style>
 </head>
 
 <body>
-
-<div id="flash"></div>
 
 <div class="container">
 
@@ -160,14 +161,14 @@ body {
 
 <div id="acertijo">
 
-<p><b>S</b>aber cambiar también es saber elegir.</p>
-<p><b>O</b>bservarse requiere más valor del que parece.</p>
-<p><b>Y</b> no todos están preparados para hacerlo.</p>
-<p><b>R</b>efinaste lo que otros ni siquiera perciben.</p>
+<p><b>S</b>i cambiaste, no fue por encajar. Fue por decidir.</p>
+<p><b>O</b>lvidaste lo que otros pensaban… y empezaste a escucharte.</p>
+<p><b>Y</b> eso, no todo el mundo se atreve a hacerlo.</p>
+<p><b>R</b>ompiste con lo que no te representaba.</p>
 <p><b>E</b>legiste verte como realmente querías.</p>
-<p><b>B</b>uscaste precisión, no casualidad.</p>
-<p><b>E</b>l detalle marcó la diferencia.</p>
-<p><b>L</b>a transformación habla por sí sola.</p>
+<p><b>B</b>uscaste algo más que lo típico.</p>
+<p><b>E</b>l cambio no fue casualidad.</p>
+<p><b>L</b>o hiciste porque sabías que era para ti.</p>
 
 <div id="instruction">Introduce la palabra secreta</div>
 
@@ -179,28 +180,46 @@ body {
 
 </div>
 
+<!-- FINAL -->
 <div id="access">
-<h1 id="t1">Correcto.</h1>
-<p id="t2">No era evidente.</p>
-<p id="t3">No era para todos.</p>
-<p id="t4">Pero tú lo has visto.</p>
-<p id="t5">Estás dentro.</p>
-<h2 id="t6">Bienvenido a la REBEL PARTY 2026</h2>
+  <div id="accessContent">
+    <h1>ENHORABUENA.</h1>
+
+    <p>No todo el mundo llega hasta aquí.</p>
+    <p>No todo el mundo se atreve a dar el paso.</p>
+
+    <p>Pero tú sí.</p>
+
+    <p>Has tomado el control. Has decidido verte como querías.</p>
+
+    <p><b>Tienes tu sitio asegurado en la REBEL PARTY 2026.</b></p>
+
+    <p>📍 Barbillon, Marbella</p>
+    <p>📅 9 de octubre</p>
+
+    <p>Ve pensando con quién vas a compartir este día.</p>
+  </div>
 </div>
 
 <script>
 
-const text = `No todos reciben esto.
+const text = `No todos llegan hasta aquí.
 
-Hemos estado observando.
+Ni todos se atreven.
 
+Durante un tiempo hemos estado observando.
 No buscamos a cualquiera.
 
-Si estás aquí, ya has pasado el primer filtro.
+Buscamos a los que deciden.
+A los que no se conforman.
+A los que se atreven a verse como realmente quieren.
 
-Pero aún queda una prueba.
+Si estás aquí… ya has sido más atrevido que el resto.
 
-Demuestra que sabes ver lo que otros no ven.`;
+Pero aún queda un paso.
+
+Demuestra que sigues viendo lo que otros no ven.`;
+
 
 const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
@@ -208,7 +227,6 @@ const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
 const validateBtn = document.getElementById("validateBtn");
 const access = document.getElementById("access");
-const flash = document.getElementById("flash");
 
 let i = 0;
 
@@ -216,9 +234,9 @@ function typeWriter(){
   if(i < text.length){
     typedText.innerHTML += text.charAt(i);
     i++;
-    setTimeout(typeWriter, 36);
+    setTimeout(typeWriter, 34);
   } else {
-    setTimeout(()=> continueBtn.style.display="block", 1200);
+    setTimeout(()=> continueBtn.style.display="block", 1000);
   }
 }
 
@@ -230,47 +248,14 @@ continueBtn.onclick = () => {
   continueBtn.style.display = "none";
 };
 
-/* FUNCIÓN VALIDAR */
-function validarCodigo(){
+/* VALIDAR */
+validateBtn.onclick = () => {
   if(input.value.toUpperCase() === "SOYREBEL"){
-    showFinal();
+    access.style.display = "flex";
   } else {
     input.value = "";
   }
-}
-
-/* CLICK BOTÓN */
-validateBtn.onclick = validarCodigo;
-
-/* ENTER TAMBIÉN FUNCIONA */
-input.addEventListener("keypress", (e)=>{
-  if(e.key === "Enter"){
-    validarCodigo();
-  }
-});
-
-/* CINEMÁTICA FINAL */
-function showFinal(){
-
-  access.style.display = "flex";
-
-  flash.style.opacity = "1";
-  setTimeout(()=> flash.style.opacity = "0", 200);
-
-  if(navigator.vibrate) navigator.vibrate(200);
-
-  setTimeout(()=> access.style.opacity = "1", 200);
-
-  const items = ["t1","t2","t3","t4","t5","t6"];
-
-  items.forEach((id, index)=>{
-    setTimeout(()=>{
-      const el = document.getElementById(id);
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
-    }, 500 + index * 400);
-  });
-}
+};
 
 </script>
 
