@@ -38,7 +38,7 @@ body {
   white-space: pre-line;
 }
 
-/* BOTÓN CENTRADO */
+/* BOTÓN */
 #continueBtn {
   margin: 25px auto 0;
   display: none;
@@ -49,7 +49,6 @@ body {
   width: 100%;
   max-width: 260px;
   border-radius: 6px;
-  display: block;
 }
 
 /* ACERTIJO */
@@ -119,7 +118,7 @@ body {
   overflow: hidden;
 }
 
-/* FONDO MÁS CLARO */
+/* FONDO */
 #bg {
   position: absolute;
   inset: 0;
@@ -135,7 +134,7 @@ body {
   background: rgba(0,0,0,0.45);
 }
 
-/* CONTENIDO */
+/* CONTENIDO FINAL */
 #accessContent {
   position: relative;
   text-align: center;
@@ -144,7 +143,7 @@ body {
   padding: 20px;
 }
 
-/* ENHORABUENA ANIMADA */
+/* ENHORABUENA */
 #bigTitle {
   font-size: 3rem;
   transform: scale(3);
@@ -157,12 +156,38 @@ body {
   opacity: 1;
 }
 
-/* TEXTO TYPEWRITER FINAL */
+/* TEXTO FINAL */
 #finalText {
   margin-top: 20px;
   font-size: 15px;
   line-height: 1.6;
   white-space: pre-line;
+}
+
+/* CALENDARIO */
+#calendar {
+  margin-top: 20px;
+}
+
+.month {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  font-size: 13px;
+}
+
+.days span {
+  padding: 6px;
+}
+
+.highlight {
+  border: 2px solid #FFD400;
+  border-radius: 50%;
 }
 
 </style>
@@ -209,8 +234,36 @@ body {
 <div id="overlay"></div>
 
 <div id="accessContent">
+
 <h1 id="bigTitle">ENHORABUENA</h1>
+
 <div id="finalText"></div>
+
+<div id="eventBlock" style="display:none;">
+
+<div id="calendar">
+<div class="month">OCTUBRE 2026</div>
+<div class="days">
+<span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+<span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
+<span>5</span><span>6</span><span>7</span><span>8</span><span class="highlight">9</span>
+<span>10</span><span>11</span>
+<span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+<span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+<span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+</div>
+</div>
+
+<p id="countdown"></p>
+
+<p>
+📅 VIERNES 9 DE OCTUBRE DE 2026<br>
+📍 BARBILLON, MARBELLA<br>
+🎉 <a href="https://maps.google.com?q=Barbillon+Marbella" target="_blank" style="color:#FFD400;">VER UBICACIÓN</a>
+</p>
+
+</div>
+
 </div>
 </div>
 
@@ -240,18 +293,13 @@ Pero tú sí.
 
 Has decidido verte como realmente querías.
 
-Tienes tu sitio asegurado en la REBEL PARTY 2026.
+Tienes tu sitio asegurado en la REBEL PARTY 2026.`;
 
-📍 Barbillon, Marbella
-📅 9 de octubre
-
-Ve pensando con quién vas a vivirlo.`;
-
+let i = 0;
 const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
 const acertijo = document.getElementById("acertijo");
 const input = document.getElementById("codeInput");
-const validateBtn = document.getElementById("validateBtn");
 
 const access = document.getElementById("access");
 const flash = document.getElementById("flash");
@@ -260,9 +308,6 @@ const main = document.getElementById("main");
 const bigTitle = document.getElementById("bigTitle");
 const finalText = document.getElementById("finalText");
 
-let i = 0;
-
-/* TYPEWRITER INICIAL */
 function typeWriter(){
   if(i < text.length){
     typedText.innerHTML += text.charAt(i);
@@ -275,14 +320,12 @@ function typeWriter(){
 
 window.onload = typeWriter;
 
-/* CONTINUAR */
 continueBtn.onclick = () => {
   acertijo.style.display = "block";
   continueBtn.style.display = "none";
 };
 
-/* VALIDAR */
-validateBtn.onclick = () => {
+document.getElementById("validateBtn").onclick = () => {
   if(input.value.toUpperCase() === "SOYREBEL"){
     showFinal();
   } else {
@@ -290,7 +333,6 @@ validateBtn.onclick = () => {
   }
 };
 
-/* FINAL CINEMÁTICO */
 function showFinal(){
 
   main.style.opacity = "0";
@@ -301,18 +343,30 @@ function showFinal(){
   setTimeout(()=>{
     access.style.display = "flex";
 
-    /* animación ENHORABUENA */
     setTimeout(()=>{
       bigTitle.classList.add("show");
     },300);
 
-    /* escribir texto final */
     let j = 0;
     function writeFinal(){
       if(j < finalMessage.length){
         finalText.innerHTML += finalMessage.charAt(j);
         j++;
         setTimeout(writeFinal, 28);
+      } else {
+
+        setTimeout(()=>{
+          document.getElementById("eventBlock").style.display = "block";
+
+          const eventDate = new Date("October 9, 2026");
+          const today = new Date();
+          const diff = eventDate - today;
+          const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+          document.getElementById("countdown").innerText =
+            "Faltan " + days + " días";
+
+        }, 800);
       }
     }
 
