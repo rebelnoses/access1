@@ -14,9 +14,7 @@ html, body, button, input, textarea, div, p, span, h1, h2, h3{
   font-family:'Barlow',sans-serif !important;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 body{
   margin:0;
@@ -44,7 +42,7 @@ body{
   margin-bottom:30px;
 }
 
-/* TEXTO */
+/* TEXTO INICIAL */
 
 #typedText{
   font-size:1.15rem;
@@ -53,7 +51,7 @@ body{
   min-height:340px;
 }
 
-/* BOTONES */
+/* BOTÓN */
 
 .mainBtn{
   margin:25px auto 0;
@@ -175,32 +173,10 @@ body{
 #videoOverlay{
   position:absolute;
   inset:0;
-  background:linear-gradient(
-    to top,
-    rgba(0,0,0,.82),
-    rgba(0,0,0,.15)
-  );
+  background:linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,.15));
 }
 
-/* VIDEO TEXT */
-
-#videoText{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:30px;
-  z-index:10;
-}
-
-#videoTextInner{
-  max-width:650px;
-  width:100%;
-}
-
-/* CINEMATIC TEXT */
+/* CINEMATIC */
 
 .cinematic{
   opacity:0;
@@ -222,8 +198,6 @@ body{
   transform:translateY(-20px);
 }
 
-/* PARTY */
-
 #party{
   font-size:2.5rem;
   font-weight:800;
@@ -231,7 +205,7 @@ body{
   margin-top:12px;
 }
 
-/* FINAL INFO */
+/* FINAL */
 
 #finalInfo{
   position:absolute;
@@ -244,73 +218,50 @@ body{
   z-index:20;
   opacity:0;
   transition:all 1.5s ease;
+  line-height:1.9;
+  font-size:1.05rem;
 }
 
 #finalInfo.show{
   opacity:1;
 }
 
-/* FINAL CARD */
-
-#finalCard{
-  backdrop-filter:blur(10px);
-  background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:24px;
-  padding:28px 24px;
-}
-
-/* FINAL LINES */
-
-.finalLine{
-  opacity:0;
-  transform:translateY(30px);
-  filter:blur(8px);
-  transition:
-    opacity 1.2s ease,
-    transform 1.2s ease,
-    filter 1.2s ease;
-  line-height:1.8;
-  margin:10px 0;
-}
-
-.finalLine.show{
-  opacity:1;
-  transform:translateY(0);
-  filter:blur(0);
-}
-
-/* CONFIRM */
-
 #confirmText{
-  margin-top:28px;
-  color:#FFD400;
-  font-size:1.05rem;
-  font-weight:700;
-  min-height:30px;
-  letter-spacing:.5px;
+  white-space:pre-line;
+  text-align:center;
+  line-height:1.9;
+}
+
+/* FADE OUT FINAL */
+
+#fadeOut{
+  position:fixed;
+  inset:0;
+  background:black;
+  opacity:0;
+  z-index:9999;
+  pointer-events:none;
+  transition:2s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* LOGO FINAL */
+
+#fadeLogo{
+  width:220px;
+  opacity:0;
+  transform:scale(1.2);
+  transition:1.5s ease;
 }
 
 /* MOBILE */
 
 @media(max-width:480px){
-
-  #typedText{
-    font-size:1.03rem;
-  }
-
-  .cinematic{
-    font-size:1rem;
-  }
-
-  #party{
-    font-size:2rem;
-  }
-
-  .finalLine{
-    font-size:.98rem;
-  }
-
+  #typedText{ font-size:1.03rem; }
+  .cinematic{ font-size:1rem; }
+  #party{ font-size:2rem; }
 }
 
 </style>
@@ -319,8 +270,6 @@ body{
 <body>
 
 <div id="flash"></div>
-
-<!-- MAIN -->
 
 <div class="container">
 
@@ -361,13 +310,8 @@ PROBAR SUERTE
 <!-- ACCESS -->
 
 <div id="accessScreen">
-
-<div id="accessText">
-ACCESO DESBLOQUEADO
-</div>
-
+<div id="accessText">ACCESO DESBLOQUEADO</div>
 <div id="welcomeText"></div>
-
 </div>
 
 <!-- VIDEO -->
@@ -380,59 +324,25 @@ ACCESO DESBLOQUEADO
 
 <div id="videoOverlay"></div>
 
-<!-- CINEMATIC TEXT -->
-
-<div id="videoText">
-
-<div id="videoTextInner">
-
 <div class="cinematic" id="cine1">
 PORQUE LAS MEJORES HISTORIAS<br>
 MERECEN CELEBRARSE JUNTAS
 </div>
 
 <div class="cinematic" id="cine2">
-
 ESTÁS OFICIALMENTE<br>
 INVITADA/O A LA
-
-<div id="party">
-REBEL PARTY
+<div id="party">REBEL PARTY</div>
 </div>
 
-</div>
-
-</div>
+<div id="finalInfo"></div>
 
 </div>
 
-<!-- FINAL INFO -->
+<!-- FADE OUT -->
 
-<div id="finalInfo">
-
-<div id="finalCard">
-
-<div class="finalLine">
-Viernes, 9 de octubre<br>
-Barbillón Marbella<br>
-20:00h
-</div>
-
-<div class="finalLine">
-Se ruega puntualidad.<br>
-Dress code: actitud obligatoria. Lo demás es opcional.
-</div>
-
-<div class="finalLine">
-Música, sorpresas y una noche creada para nuestros pacientes más especiales.
-</div>
-
-<div id="confirmText"></div>
-
-</div>
-
-</div>
-
+<div id="fadeOut">
+<img id="fadeLogo" src="logo.png">
 </div>
 
 <script>
@@ -448,258 +358,148 @@ Solo quienes sepan mirar más allá descubrirán la clave.
 Encuéntrala y tendrás acceso.`;
 
 let i = 0;
-
-const typedText =
-document.getElementById("typedText");
+const typedText = document.getElementById("typedText");
 
 function typeWriter(){
-
   if(i < text.length){
-
     typedText.innerHTML += text.charAt(i);
-
     i++;
-
     setTimeout(typeWriter,35);
-
   } else {
-
-    setTimeout(()=>{
-
-      document
-      .getElementById("continueBtn")
-      .style.display = "block";
-
-    },700);
-
+    setTimeout(()=>document.getElementById("continueBtn").style.display="block",700);
   }
-
 }
 
 window.onload = typeWriter;
 
 /* CONTINUE */
 
-document
-.getElementById("continueBtn")
-.onclick = ()=>{
-
-  document
-  .getElementById("acertijo")
-  .style.display = "block";
-
-  document
-  .getElementById("continueBtn")
-  .style.display = "none";
-
+document.getElementById("continueBtn").onclick = ()=>{
+  document.getElementById("acertijo").style.display="block";
+  document.getElementById("continueBtn").style.display="none";
 };
 
 /* VALIDATE */
 
-document
-.getElementById("validateBtn")
-.onclick = ()=>{
+document.getElementById("validateBtn").onclick = ()=>{
 
-  const value =
-  document
-  .getElementById("codeInput")
-  .value
-  .toUpperCase();
+  const value = document.getElementById("codeInput").value.toUpperCase();
 
-  if(value === "ACTITUD"){
-
-    document
-    .querySelector(".container")
-    .style.opacity = "0";
-
-    setTimeout(()=>{
-      startExperience();
-    },300);
-
+  if(value==="ACTITUD"){
+    document.querySelector(".container").style.opacity="0";
+    setTimeout(startExperience,300);
   }
-
 };
 
 /* EXPERIENCE */
 
 function startExperience(){
 
-  const flash =
-  document.getElementById("flash");
-
-  flash.style.opacity = "1";
-
-  setTimeout(()=>{
-    flash.style.opacity = "0";
-  },200);
-
-  /* ACCESS */
+  document.getElementById("flash").style.opacity="1";
+  setTimeout(()=>document.getElementById("flash").style.opacity="0",200);
 
   setTimeout(()=>{
 
-    const access =
-    document.getElementById("accessScreen");
+    const access = document.getElementById("accessScreen");
+    access.style.display="flex";
 
-    access.style.display = "flex";
+    setTimeout(()=>document.getElementById("accessText").classList.add("show"),150);
 
-    setTimeout(()=>{
+    const welcome = "¡Te damos la bienvenida a la experiencia más exclusiva de Rebel Noses!";
+    let j=0;
 
-      document
-      .getElementById("accessText")
-      .classList
-      .add("show");
-
-    },150);
-
-    /* WELCOME */
-
-    const welcome =
-    `¡Te damos la bienvenida a la experiencia más exclusiva de Rebel Noses!`;
-
-    let j = 0;
-
-    const welcomeDiv =
-    document.getElementById("welcomeText");
-
-    function writeWelcome(){
-
-      if(j < welcome.length){
-
-        welcomeDiv.innerHTML += welcome.charAt(j);
-
+    function write(){
+      if(j<welcome.length){
+        document.getElementById("welcomeText").innerHTML+=welcome.charAt(j);
         j++;
-
-        setTimeout(writeWelcome,30);
-
+        setTimeout(write,30);
       }
-
     }
 
-    setTimeout(writeWelcome,700);
+    setTimeout(write,700);
 
-    /* DESVANECER */
-
-    setTimeout(()=>{
-
-      access.style.opacity = "0";
-
-    },3400);
+    setTimeout(()=>access.style.opacity="0",3400);
 
   },250);
 
-  /* VIDEO */
-
   setTimeout(()=>{
 
-    document
-    .getElementById("accessScreen")
-    .style.display = "none";
+    document.getElementById("accessScreen").style.display="none";
+    document.getElementById("videoScreen").style.display="block";
 
-    const videoScreen =
-    document.getElementById("videoScreen");
-
-    videoScreen.style.display = "block";
-
-    const video =
-    document.getElementById("bgVideo");
-
-    video.muted = false;
-    video.volume = 1;
-
+    const video=document.getElementById("bgVideo");
+    video.muted=false;
+    video.volume=1;
     video.play();
 
     /* TEXTO 1 */
-
     setTimeout(()=>{
-
-      const t1 =
-      document.getElementById("cine1");
-
+      const t1=document.getElementById("cine1");
       t1.classList.add("show");
-
-      setTimeout(()=>{
-
-        t1.classList.remove("show");
-        t1.classList.add("hide");
-
-      },3500);
-
+      setTimeout(()=>t1.classList.add("hide"),3500);
     },10000);
 
     /* TEXTO 2 */
-
     setTimeout(()=>{
-
-      const t2 =
-      document.getElementById("cine2");
-
+      const t2=document.getElementById("cine2");
       t2.classList.add("show");
-
-      setTimeout(()=>{
-
-        t2.classList.remove("show");
-        t2.classList.add("hide");
-
-      },4000);
-
+      setTimeout(()=>t2.classList.add("hide"),4000);
     },14500);
 
-    /* FINAL INFO */
-
+    /* FINAL TEXT (35s) */
     setTimeout(()=>{
 
-      const final =
-      document.getElementById("finalInfo");
+      const finalText =
+`Tendrá lugar en...
 
-      final.classList.add("show");
+Barbillón Marbella
 
-      const lines =
-      document.querySelectorAll(".finalLine");
+Viernes, 9 de octubre
+20:00h
 
-      lines.forEach((line,i)=>{
+Se ruega puntualidad
 
-        setTimeout(()=>{
+Dress code: ACTITUD obligatoria. Lo demás es opcional.
 
-          line.classList.add("show");
+Música, sorpresas y una noche creada para nuestros pacientes más especiales.
 
-        }, i * 700);
+Confirma tu asistencia, por favor`;
 
-      });
+      let k=0;
+      const final=document.getElementById("finalInfo");
 
-      /* TYPEWRITER FINAL */
+      final.innerHTML="";
+
+      function typeFinal(){
+        if(k<finalText.length){
+          final.innerHTML+=finalText.charAt(k);
+          k++;
+          setTimeout(typeFinal,22);
+        }
+      }
 
       setTimeout(()=>{
-
-        const confirm =
-        "Confirmad asistencia, por favor";
-
-        let k = 0;
-
-        const confirmDiv =
-        document.getElementById("confirmText");
-
-        function writeConfirm(){
-
-          if(k < confirm.length){
-
-            confirmDiv.innerHTML += confirm.charAt(k);
-
-            k++;
-
-            setTimeout(writeConfirm,45);
-
-          }
-
-        }
-
-        writeConfirm();
-
-      },2500);
+        final.classList.add("show");
+        typeFinal();
+      },500);
 
     },35000);
 
-  },4500);
+    /* FADE OUT FINAL */
 
+    setTimeout(()=>{
+
+      const fade=document.getElementById("fadeOut");
+      fade.style.opacity="1";
+
+      setTimeout(()=>{
+        document.getElementById("fadeLogo").style.opacity="1";
+        document.getElementById("fadeLogo").style.transform="scale(1)";
+      },800);
+
+    },52000);
+
+  },4500);
 }
 
 </script>
