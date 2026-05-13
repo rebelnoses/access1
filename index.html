@@ -10,10 +10,6 @@
 
 <style>
 
-/* =========================
-   FUENTE GLOBAL
-========================= */
-
 html, body, button, input, textarea, div, p, span, h1, h2, h3{
   font-family:'Barlow',sans-serif !important;
 }
@@ -24,14 +20,12 @@ html, body, button, input, textarea, div, p, span, h1, h2, h3{
 
 body{
   margin:0;
-  background:#050505;
-  color:#fff;
-  overflow-x:hidden;
+  background:black;
+  color:white;
+  overflow:hidden;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .container{
   width:100%;
@@ -42,29 +36,23 @@ body{
   min-height:100vh;
 }
 
-/* =========================
-   LOGO
-========================= */
+/* LOGO */
 
 #logo img{
   width:clamp(240px,72vw,360px);
   margin-bottom:30px;
 }
 
-/* =========================
-   TEXTO PRINCIPAL
-========================= */
+/* TEXTO */
 
 #typedText{
-  font-size:1.18rem;
+  font-size:1.15rem;
   line-height:1.85;
   white-space:pre-line;
   min-height:340px;
 }
 
-/* =========================
-   BOTONES
-========================= */
+/* BOTONES */
 
 .mainBtn{
   margin:25px auto 0;
@@ -80,9 +68,7 @@ body{
   cursor:pointer;
 }
 
-/* =========================
-   ACERTIJO
-========================= */
+/* ACERTIJO */
 
 #acertijo{
   display:none;
@@ -99,9 +85,7 @@ body{
   line-height:1.7;
 }
 
-/* =========================
-   INPUT
-========================= */
+/* INPUT */
 
 #codeInput{
   width:100%;
@@ -116,9 +100,7 @@ body{
   letter-spacing:10px;
 }
 
-/* =========================
-   FLASH
-========================= */
+/* FLASH */
 
 #flash{
   position:fixed;
@@ -130,9 +112,7 @@ body{
   transition:.3s;
 }
 
-/* =========================
-   ACCESS
-========================= */
+/* ACCESS */
 
 #accessScreen{
   position:fixed;
@@ -145,11 +125,12 @@ body{
   text-align:center;
   padding:30px;
   z-index:100;
+  transition:opacity 1s ease;
 }
 
 #accessText{
   color:#FFD400;
-  font-size:clamp(2rem,9vw,3.3rem);
+  font-size:clamp(2rem,9vw,3.2rem);
   font-weight:800;
   opacity:0;
   transform:scale(1.4);
@@ -162,20 +143,15 @@ body{
   transform:scale(1);
 }
 
-/* TYPEWRITER FINAL */
-
 #welcomeText{
-  color:white;
-  font-size:1.15rem;
-  line-height:1.8;
   max-width:500px;
+  line-height:1.8;
+  font-size:1.1rem;
   white-space:pre-line;
-  min-height:120px;
+  min-height:90px;
 }
 
-/* =========================
-   VIDEO
-========================= */
+/* VIDEO */
 
 #videoScreen{
   position:fixed;
@@ -191,7 +167,6 @@ body{
   width:100vw;
   height:100vh;
   object-fit:cover;
-  object-position:center;
 }
 
 /* OVERLAY */
@@ -206,18 +181,16 @@ body{
   );
 }
 
-/* =========================
-   TEXTO SOBRE VIDEO
-========================= */
+/* VIDEO TEXT */
 
 #videoText{
   position:absolute;
   inset:0;
   display:flex;
-  align-items:flex-end;
+  align-items:center;
   justify-content:center;
   text-align:center;
-  padding:40px 25px 60px;
+  padding:30px;
   z-index:10;
 }
 
@@ -226,35 +199,59 @@ body{
   width:100%;
 }
 
-/* BLOQUES */
+/* CINEMATIC TEXT */
 
-.block{
+.cinematic{
   opacity:0;
-  transform:translateY(30px);
-  transition:
-    opacity 1.4s ease,
-    transform 1.4s ease;
+  transform:translateY(25px);
+  transition:all 1.2s ease;
+  font-size:1.25rem;
+  line-height:1.8;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
-.block.show{
+.cinematic.show{
   opacity:1;
   transform:translateY(0);
 }
 
-/* TITULO */
-
-#partyTitle{
-  font-size:2.7rem;
-  font-weight:800;
-  color:#FFD400;
-  margin:20px 0;
+.cinematic.hide{
+  opacity:0;
+  transform:translateY(-20px);
 }
 
-/* TEXTO */
+/* PARTY */
+
+#party{
+  font-size:2.5rem;
+  font-weight:800;
+  color:#FFD400;
+  margin-top:12px;
+}
+
+/* FINAL INFO */
+
+#finalInfo{
+  position:absolute;
+  bottom:55px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:650px;
+  text-align:center;
+  z-index:20;
+  opacity:0;
+  transition:all 1.5s ease;
+}
+
+#finalInfo.show{
+  opacity:1;
+}
 
 .finalText{
-  font-size:1.08rem;
   line-height:1.9;
+  font-size:1.05rem;
 }
 
 /* MOBILE */
@@ -262,15 +259,19 @@ body{
 @media(max-width:480px){
 
   #typedText{
-    font-size:1.05rem;
+    font-size:1.03rem;
   }
 
-  #partyTitle{
+  .cinematic{
+    font-size:1rem;
+  }
+
+  #party{
     font-size:2rem;
   }
 
   .finalText{
-    font-size:1rem;
+    font-size:.98rem;
   }
 
 }
@@ -342,46 +343,46 @@ ACCESO DESBLOQUEADO
 
 <div id="videoOverlay"></div>
 
-<!-- TEXTO VIDEO -->
+<!-- CINEMATIC TEXT -->
 
 <div id="videoText">
 
 <div id="videoTextInner">
 
-<div class="block finalText" id="b1">
-Porque las mejores historias merecen celebrarse juntas.
+<div class="cinematic" id="cine1">
+PORQUE LAS MEJORES HISTORIAS<br>
+MERECEN CELEBRARSE JUNTAS
 </div>
 
-<br>
+<div class="cinematic" id="cine2">
 
-<div class="block finalText" id="b2">
-Estás oficialmente invitada/o a la
-</div>
+ESTÁS OFICIALMENTE<br>
+INVITADA/O A LA
 
-<div class="block" id="partyTitle">
+<div id="party">
 REBEL PARTY
 </div>
 
-<br>
-
-<div class="block finalText" id="b3">
-Música, sorpresas y una noche creada para nuestros pacientes más especiales.
 </div>
 
-<br>
+</div>
 
-<div class="block finalText" id="b4">
+</div>
+
+<!-- FINAL INFO -->
+
+<div id="finalInfo">
+
+<div class="finalText">
+
+Música, sorpresas y una noche creada para nuestros pacientes más especiales.<br><br>
+
 Viernes, 9 de octubre<br>
 Barbillón Marbella<br>
-21:00h
-</div>
+21:00h<br><br>
 
-<br>
-
-<div class="block finalText" id="b5">
 Se ruega puntualidad.<br>
 Dress code: actitud obligatoria. Lo demás es opcional.
-</div>
 
 </div>
 
@@ -391,9 +392,7 @@ Dress code: actitud obligatoria. Lo demás es opcional.
 
 <script>
 
-/* =========================
-   TEXTO INICIAL
-========================= */
+/* TYPE */
 
 const text = `No cualquiera recibe esto.
 
@@ -402,8 +401,6 @@ Pero antes de darte acceso a algo muy especial, tendrás que superar un último 
 Solo quienes sepan mirar más allá descubrirán la clave.
 
 Encuéntrala y tendrás acceso.`;
-
-/* TYPE PRINCIPAL */
 
 let i = 0;
 
@@ -452,7 +449,7 @@ document
 
 };
 
-/* VALIDAR */
+/* VALIDATE */
 
 document
 .getElementById("validateBtn")
@@ -468,19 +465,11 @@ document
 
     startExperience();
 
-  } else {
-
-    document
-    .getElementById("codeInput")
-    .value = "";
-
   }
 
 };
 
-/* =========================
-   EXPERIENCE
-========================= */
+/* EXPERIENCE */
 
 function startExperience(){
 
@@ -497,9 +486,10 @@ function startExperience(){
 
   setTimeout(()=>{
 
-    document
-    .getElementById("accessScreen")
-    .style.display = "flex";
+    const access =
+    document.getElementById("accessScreen");
+
+    access.style.display = "flex";
 
     setTimeout(()=>{
 
@@ -510,7 +500,7 @@ function startExperience(){
 
     },150);
 
-    /* TYPEWRITER WELCOME */
+    /* WELCOME */
 
     const welcome =
     `¡Te damos la bienvenida a la experiencia más exclusiva de Rebel Noses!`;
@@ -528,13 +518,21 @@ function startExperience(){
 
         j++;
 
-        setTimeout(writeWelcome,32);
+        setTimeout(writeWelcome,30);
 
       }
 
     }
 
     setTimeout(writeWelcome,700);
+
+    /* DESVANECER */
+
+    setTimeout(()=>{
+
+      access.style.opacity = "0";
+
+    },3400);
 
   },250);
 
@@ -546,37 +544,79 @@ function startExperience(){
     .getElementById("accessScreen")
     .style.display = "none";
 
-    document
-    .getElementById("videoScreen")
-    .style.display = "block";
+    const videoScreen =
+    document.getElementById("videoScreen");
+
+    videoScreen.style.display = "block";
 
     const video =
     document.getElementById("bgVideo");
 
-    /* 🔥 SONIDO */
     video.muted = false;
     video.volume = 1;
 
     video.play();
 
-    /* 🔥 TEXTO A LOS 10 SEGUNDOS */
+    /* TEXTO 1 */
 
     setTimeout(()=>{
 
-      const blocks =
-      document.querySelectorAll(".block");
+      const t1 =
+      document.getElementById("cine1");
 
-      blocks.forEach((b,i)=>{
+      t1.classList.add("show");
 
-        setTimeout(()=>{
+      /* QUITAR */
 
-          b.classList.add("show");
+      setTimeout(()=>{
 
-        }, i * 700);
+        t1.classList.remove("show");
+        t1.classList.add("hide");
 
-      });
+      },3500);
 
     },10000);
+
+    /* TEXTO 2 */
+
+    setTimeout(()=>{
+
+      const t2 =
+      document.getElementById("cine2");
+
+      t2.classList.add("show");
+
+      /* QUITAR */
+
+      setTimeout(()=>{
+
+        t2.classList.remove("show");
+        t2.classList.add("hide");
+
+      },4000);
+
+    },14500);
+
+    /* FINAL INFO */
+
+    video.onloadedmetadata = ()=>{
+
+      const duration =
+      video.duration;
+
+      const finalTime =
+      (duration - 2) * 1000;
+
+      setTimeout(()=>{
+
+        document
+        .getElementById("finalInfo")
+        .classList
+        .add("show");
+
+      },finalTime);
+
+    };
 
   },4500);
 
