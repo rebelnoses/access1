@@ -280,6 +280,17 @@ body{
   filter:blur(0);
 }
 
+/* CONFIRM */
+
+#confirmText{
+  margin-top:28px;
+  color:#FFD400;
+  font-size:1.05rem;
+  font-weight:700;
+  min-height:30px;
+  letter-spacing:.5px;
+}
+
 /* MOBILE */
 
 @media(max-width:480px){
@@ -402,28 +413,21 @@ REBEL PARTY
 <div id="finalCard">
 
 <div class="finalLine">
+Viernes, 9 de octubre<br>
+Barbillón Marbella<br>
+20:00h
+</div>
+
+<div class="finalLine">
+Se ruega puntualidad.<br>
+Dress code: actitud obligatoria. Lo demás es opcional.
+</div>
+
+<div class="finalLine">
 Música, sorpresas y una noche creada para nuestros pacientes más especiales.
 </div>
 
-<div class="finalLine">
-Viernes, 9 de octubre
-</div>
-
-<div class="finalLine">
-Barbillón Marbella
-</div>
-
-<div class="finalLine">
-21:00h
-</div>
-
-<div class="finalLine">
-Se ruega puntualidad.
-</div>
-
-<div class="finalLine">
-Dress code: actitud obligatoria. Lo demás es opcional.
-</div>
+<div id="confirmText"></div>
 
 </div>
 
@@ -504,7 +508,6 @@ document
 
   if(value === "ACTITUD"){
 
-    /* ocultar main */
     document
     .querySelector(".container")
     .style.opacity = "0";
@@ -643,37 +646,57 @@ function startExperience(){
 
     /* FINAL INFO */
 
-    video.onloadedmetadata = ()=>{
+    setTimeout(()=>{
 
-      const duration =
-      video.duration;
+      const final =
+      document.getElementById("finalInfo");
 
-      const finalTime =
-      (duration - 3) * 1000;
+      final.classList.add("show");
+
+      const lines =
+      document.querySelectorAll(".finalLine");
+
+      lines.forEach((line,i)=>{
+
+        setTimeout(()=>{
+
+          line.classList.add("show");
+
+        }, i * 700);
+
+      });
+
+      /* TYPEWRITER FINAL */
 
       setTimeout(()=>{
 
-        const final =
-        document.getElementById("finalInfo");
+        const confirm =
+        "Confirmad asistencia, por favor";
 
-        final.classList.add("show");
+        let k = 0;
 
-        const lines =
-        document.querySelectorAll(".finalLine");
+        const confirmDiv =
+        document.getElementById("confirmText");
 
-        lines.forEach((line,i)=>{
+        function writeConfirm(){
 
-          setTimeout(()=>{
+          if(k < confirm.length){
 
-            line.classList.add("show");
+            confirmDiv.innerHTML += confirm.charAt(k);
 
-          }, i * 450);
+            k++;
 
-        });
+            setTimeout(writeConfirm,45);
 
-      },finalTime);
+          }
 
-    };
+        }
+
+        writeConfirm();
+
+      },2500);
+
+    },35000);
 
   },4500);
 
