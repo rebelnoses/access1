@@ -19,22 +19,11 @@ body{
   background:#050505;
   color:#f5f5f5;
   font-family:'Barlow',sans-serif;
-  overflow-x:hidden;
-}
-
-/* FONDO GENERAL */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-  linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-  url('lugar.jpg') center/cover no-repeat;
-  opacity:.08;
-  z-index:-2;
+  overflow:hidden;
 }
 
 /* CONTENEDOR */
+
 .container{
   width:100%;
   max-width:650px;
@@ -48,12 +37,14 @@ body::before{
 }
 
 /* LOGO */
+
 #logo img{
   width:clamp(220px,70vw,340px);
   margin-bottom:30px;
 }
 
 /* TEXTO INICIAL */
+
 #typedText{
   font-size:1.18rem;
   line-height:1.75;
@@ -63,6 +54,7 @@ body::before{
 }
 
 /* BOTONES */
+
 .mainBtn{
   margin:25px auto 0;
   width:100%;
@@ -79,6 +71,7 @@ body::before{
 }
 
 /* ACERTIJO */
+
 #acertijo{
   display:none;
   margin-top:35px;
@@ -97,6 +90,7 @@ body::before{
 }
 
 /* TEXTO AYUDA */
+
 #instruction{
   margin-top:28px;
   text-align:center;
@@ -106,6 +100,7 @@ body::before{
 }
 
 /* INPUT */
+
 #codeInput{
   width:100%;
   margin-top:18px;
@@ -121,86 +116,8 @@ body::before{
   letter-spacing:10px;
 }
 
-/* PANTALLA FINAL */
-#finalScreen{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-/* FONDO */
-#bg{
-  position:absolute;
-  inset:0;
-  background:
-  linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-  url('lugar.jpg') center/cover no-repeat;
-  filter:blur(3px) brightness(.78);
-  transform:scale(1.04);
-}
-
-/* CONTENIDO FINAL */
-#finalContent{
-  position:relative;
-  z-index:2;
-  width:100%;
-  max-width:700px;
-  padding:40px 24px 60px;
-  text-align:center;
-  color:white;
-}
-
-/* TITULO */
-#accessTitle{
-  font-size:3.2rem;
-  color:#FFD400;
-  font-weight:800;
-  letter-spacing:1px;
-  opacity:0;
-  transform:translateY(-70px) scale(.85);
-  transition:all .9s cubic-bezier(.18,1.2,.32,1);
-}
-
-/* SHOW */
-#accessTitle.show{
-  opacity:1;
-  transform:translateY(0) scale(1);
-}
-
-/* TEXTO FINAL */
-#finalText{
-  margin-top:28px;
-  white-space:pre-line;
-  line-height:1.9;
-  font-size:1.18rem;
-  font-weight:400;
-}
-
-/* REBEL PARTY */
-.highlight{
-  font-size:2.2rem;
-  font-weight:800;
-  color:#FFD400;
-  margin:18px 0;
-}
-
-/* INFO */
-.eventInfo{
-  margin-top:20px;
-  font-size:1.18rem;
-  line-height:1.8;
-}
-
-/* EXTRA */
-.small{
-  opacity:.92;
-  font-size:1rem;
-}
-
 /* FLASH */
+
 #flash{
   position:fixed;
   inset:0;
@@ -208,10 +125,122 @@ body::before{
   opacity:0;
   pointer-events:none;
   z-index:999;
-  transition:opacity .25s ease;
+  transition:opacity .3s ease;
+}
+
+/* ACCESS SCREEN */
+
+#accessScreen{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+}
+
+#accessText{
+  color:#FFD400;
+  font-size:3rem;
+  font-weight:800;
+  letter-spacing:2px;
+  opacity:0;
+  transform:scale(1.6);
+  transition:all .8s cubic-bezier(.18,1.2,.32,1);
+}
+
+#accessText.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* VIDEO SCREEN */
+
+#videoScreen{
+  position:fixed;
+  inset:0;
+  display:none;
+  background:black;
+  overflow:hidden;
+}
+
+/* VIDEO */
+
+#bgVideo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* OVERLAY OSCURO */
+
+#videoOverlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+  to top,
+  rgba(0,0,0,.88) 0%,
+  rgba(0,0,0,.45) 40%,
+  rgba(0,0,0,.2) 100%
+  );
+}
+
+/* TEXTO FINAL */
+
+#finalContent{
+  position:absolute;
+  inset:auto 0 0 0;
+  padding:40px 26px 60px;
+  color:white;
+  z-index:3;
+}
+
+#finalText{
+  white-space:pre-line;
+  line-height:1.8;
+  font-size:1.1rem;
+  max-width:650px;
+  margin:auto;
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 1.2s ease;
+}
+
+/* SHOW */
+
+#finalText.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* REBEL PARTY */
+
+.partyTitle{
+  font-size:2.7rem;
+  color:#FFD400;
+  font-weight:800;
+  margin:24px 0;
+  letter-spacing:1px;
+}
+
+/* INFO */
+
+.eventInfo{
+  margin-top:24px;
+  font-size:1.1rem;
+  line-height:1.9;
+}
+
+/* EXTRA */
+
+.small{
+  font-size:1rem;
+  opacity:.92;
 }
 
 /* MOBILE */
+
 @media(max-width:480px){
 
   #typedText{
@@ -219,16 +248,16 @@ body::before{
     min-height:350px;
   }
 
-  #accessTitle{
-    font-size:2.4rem;
+  #accessText{
+    font-size:2.2rem;
+  }
+
+  .partyTitle{
+    font-size:2.2rem;
   }
 
   #finalText{
-    font-size:1.08rem;
-  }
-
-  .highlight{
-    font-size:1.8rem;
+    font-size:1rem;
   }
 
 }
@@ -240,22 +269,22 @@ body::before{
 
 <div id="flash"></div>
 
+<!-- MAIN -->
+
 <div class="container" id="main">
 
-<!-- LOGO -->
 <div id="logo">
-<img src="logo.png" alt="logo">
+<img src="logo.png">
 </div>
 
-<!-- TEXTO -->
 <div id="typedText"></div>
 
-<!-- BOTON -->
 <button class="mainBtn" id="continueBtn" style="display:none;">
 ¡VAMOS A POR ELLO!
 </button>
 
 <!-- ACERTIJO -->
+
 <div id="acertijo">
 
 <p><b>A</b>lgunas personas esperan el momento perfecto.</p>
@@ -286,16 +315,27 @@ PROBAR SUERTE
 
 </div>
 
-<!-- FINAL -->
-<div id="finalScreen">
+<!-- ACCESS -->
 
-<div id="bg"></div>
+<div id="accessScreen">
+
+<div id="accessText">
+ACCESO DESBLOQUEADO
+</div>
+
+</div>
+
+<!-- VIDEO -->
+
+<div id="videoScreen">
+
+<video id="bgVideo" autoplay playsinline>
+<source src="Video.mp4" type="video/mp4">
+</video>
+
+<div id="videoOverlay"></div>
 
 <div id="finalContent">
-
-<h1 id="accessTitle">
-ACCESO DESBLOQUEADO
-</h1>
 
 <div id="finalText"></div>
 
@@ -318,18 +358,42 @@ Encuéntrala y tendrás acceso.`;
 
 /* TEXTO FINAL */
 
-const finalMessage = `¡Te damos la bienvenida a la experiencia más exclusiva de Rebel Noses!
+const finalHTML = `¡Te damos la bienvenida a la experiencia más exclusiva de Rebel Noses!
 
 Porque las mejores historias merecen celebrarse juntas.
 
-Estás oficialmente invitada/o a la`;
+Estás oficialmente invitada/o a la
 
-const typedText = document.getElementById("typedText");
-const continueBtn = document.getElementById("continueBtn");
+<div class="partyTitle">
+REBEL PARTY
+</div>
+
+<div class="eventInfo">
+
+📅 Viernes, 9 de octubre<br>
+
+📍 Barbillon Marbella<br>
+
+🕗 20:00h<br><br>
+
+<span class="small">
+Se ruega puntualidad.<br>
+Dress code: actitud obligatoria. Lo demás es opcional.
+</span>
+
+<br><br>
+
+🎉 Música, sorpresas y una noche creada para nuestros pacientes más especiales.
+
+</div>`;
+
+
+/* TYPEWRITER */
 
 let i = 0;
 
-/* TYPEWRITER */
+const typedText =
+document.getElementById("typedText");
 
 function typeWriter(){
 
@@ -339,12 +403,16 @@ function typeWriter(){
 
     i++;
 
-    setTimeout(typeWriter, 38);
+    setTimeout(typeWriter,38);
 
   } else {
 
     setTimeout(()=>{
-      continueBtn.style.display = "block";
+
+      document
+      .getElementById("continueBtn")
+      .style.display = "block";
+
     },700);
 
   }
@@ -356,42 +424,54 @@ window.onload = typeWriter;
 
 /* CONTINUAR */
 
-continueBtn.onclick = ()=>{
+document
+.getElementById("continueBtn")
+.onclick = ()=>{
 
-  document.getElementById("acertijo").style.display = "block";
+  document
+  .getElementById("acertijo")
+  .style.display = "block";
 
-  continueBtn.style.display = "none";
+  document
+  .getElementById("continueBtn")
+  .style.display = "none";
 
 };
 
 
 /* VALIDAR */
 
-document.getElementById("validateBtn").onclick = ()=>{
+document
+.getElementById("validateBtn")
+.onclick = ()=>{
 
-  const value = document
+  const value =
+  document
   .getElementById("codeInput")
   .value
   .toUpperCase();
 
   if(value === "ACTITUD"){
 
-    showFinal();
+    startExperience();
 
   } else {
 
-    document.getElementById("codeInput").value = "";
+    document
+    .getElementById("codeInput")
+    .value = "";
 
   }
 
 };
 
 
-/* FINAL */
+/* EXPERIENCIA */
 
-function showFinal(){
+function startExperience(){
 
-  const flash = document.getElementById("flash");
+  const flash =
+  document.getElementById("flash");
 
   flash.style.opacity = "1";
 
@@ -399,74 +479,60 @@ function showFinal(){
     flash.style.opacity = "0";
   },250);
 
+  /* ACCESS */
+
   setTimeout(()=>{
 
-    document.getElementById("finalScreen").style.display = "flex";
+    document
+    .getElementById("accessScreen")
+    .style.display = "flex";
 
     setTimeout(()=>{
 
       document
-      .getElementById("accessTitle")
+      .getElementById("accessText")
       .classList
       .add("show");
 
-    },250);
+    },100);
 
-    let j = 0;
+  },250);
 
-    const finalText =
-    document.getElementById("finalText");
+  /* PASAR A VIDEO */
 
-    function writeFinal(){
+  setTimeout(()=>{
 
-      if(j < finalMessage.length){
+    document
+    .getElementById("accessScreen")
+    .style.display = "none";
 
-        finalText.innerHTML += finalMessage.charAt(j);
+    const videoScreen =
+    document.getElementById("videoScreen");
 
-        j++;
+    videoScreen.style.display = "block";
 
-        setTimeout(writeFinal,25);
+    const video =
+    document.getElementById("bgVideo");
 
-      } else {
+    /* AUDIO */
+    video.muted = false;
 
-        setTimeout(()=>{
+    /* TEXTO AL FINAL VIDEO */
 
-          finalText.innerHTML += `
+    video.onended = ()=>{
 
-<div class="highlight">
-REBEL PARTY
-</div>
+      const finalText =
+      document.getElementById("finalText");
 
-<div class="eventInfo">
+      finalText.innerHTML = finalHTML;
 
-📅 Viernes, 9 de octubre<br>
+      setTimeout(()=>{
+        finalText.classList.add("show");
+      },100);
 
-📍 Barbillon Marbella<br>
+    };
 
-🕘 21:00h<br><br>
-
-<span class="small">
-Se ruega puntualidad.<br>
-Dress code: actitud obligatoria. Lo demás es opcional.
-</span>
-
-<br><br>
-
-🎉 Música, sorpresas y una noche creada para nuestros pacientes más especiales.
-
-</div>
-
-`;
-
-        },400);
-
-      }
-
-    }
-
-    setTimeout(writeFinal,1100);
-
-  },300);
+  },2600);
 
 }
 
