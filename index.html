@@ -10,13 +10,19 @@
 
 <style>
 
-*{box-sizing:border-box;}
+/* 🔥 FORZAR BARLOW EN TODO */
+html, body, button, input, textarea, div, p, span, h1, h2, h3 {
+  font-family:'Barlow', sans-serif !important;
+}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   background:#050505;
   color:#f5f5f5;
-  font-family:'Barlow',sans-serif;
   overflow-x:hidden;
 }
 
@@ -58,6 +64,7 @@ body{
   padding:17px 20px;
   font-size:1rem;
   font-weight:700;
+  cursor:pointer;
 }
 
 /* ACERTIJO */
@@ -68,6 +75,10 @@ body{
   background:rgba(255,212,0,.08);
   border-radius:22px;
   padding:28px 24px;
+}
+
+#acertijo p{
+  margin:14px 0;
 }
 
 /* INPUT */
@@ -120,7 +131,7 @@ body{
   transform:scale(1);
 }
 
-/* VIDEO FULL */
+/* 🎥 VIDEO FULL SCREEN REAL */
 #videoScreen{
   position:fixed;
   inset:0;
@@ -129,12 +140,15 @@ body{
   overflow:hidden;
 }
 
+/* 🔥 CLAVE: FULL COVER SIN BORDES */
 #bgVideo{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
   object-fit:cover;
+  object-position:center;
 }
 
 /* overlay suave */
@@ -158,14 +172,14 @@ body{
   text-align:center;
 }
 
-/* BLOQUE FINAL */
+/* BLOQUES */
 #finalBox{
   max-width:650px;
   font-size:1.15rem;
   line-height:1.8;
 }
 
-/* TITULO */
+/* REBEL TITLE */
 #partyTitle{
   font-size:2.6rem;
   font-weight:800;
@@ -173,16 +187,33 @@ body{
   margin:20px 0;
 }
 
-/* ANIMACIONES EXTRA */
+/* ANIMACIÓN BLOQUES */
 .block{
   opacity:0;
-  transform:translateY(25px);
+  transform:translateY(20px);
   transition:all 1s ease;
 }
 
 .block.show{
   opacity:1;
   transform:translateY(0);
+}
+
+/* MOBILE */
+@media(max-width:480px){
+
+  #accessText{
+    font-size:2.2rem;
+  }
+
+  #partyTitle{
+    font-size:2rem;
+  }
+
+  #typedText{
+    font-size:1.05rem;
+  }
+
 }
 
 </style>
@@ -236,7 +267,7 @@ PROBAR SUERTE
 <!-- VIDEO -->
 <div id="videoScreen">
 
-<video id="bgVideo" playsinline>
+<video id="bgVideo" playsinline autoplay muted>
 <source src="Video.mp4" type="video/mp4">
 </video>
 
@@ -246,25 +277,15 @@ PROBAR SUERTE
 
 <div id="finalBox">
 
-<div class="block" id="b1">
-¡Te damos la bienvenida a la experiencia más exclusiva de Rebel Noses!
-</div>
-
+<div class="block">¡Te damos la bienvenida a la experiencia más exclusiva de Rebel Noses!</div>
 <br>
-
-<div class="block" id="b2">
-Porque las mejores historias merecen celebrarse juntas.
-</div>
-
+<div class="block">Porque las mejores historias merecen celebrarse juntas.</div>
 <br>
-
-<div class="block" id="b3">
-Estás oficialmente invitada/o a la
-</div>
+<div class="block">Estás oficialmente invitada/o a la</div>
 
 <div id="partyTitle" class="block">REBEL PARTY</div>
 
-<div class="block" id="b4">
+<div class="block">
 Viernes, 9 de octubre<br>
 Barbillon Marbella<br>
 21:00h
@@ -272,14 +293,14 @@ Barbillon Marbella<br>
 
 <br>
 
-<div class="block" id="b5">
+<div class="block">
 Se ruega puntualidad.<br>
 Dress code: actitud obligatoria. Lo demás es opcional.
 </div>
 
 <br>
 
-<div class="block" id="b6">
+<div class="block">
 Música, sorpresas y una noche creada para nuestros pacientes más especiales.
 </div>
 
@@ -292,7 +313,6 @@ Música, sorpresas y una noche creada para nuestros pacientes más especiales.
 <script>
 
 /* TEXTO INICIAL */
-
 const text = `No cualquiera recibe esto.
 
 Pero antes de darte acceso a algo muy especial, tendrás que superar un último reto.
@@ -301,8 +321,7 @@ Solo quienes sepan mirar más allá descubrirán la clave.
 
 Encuéntrala y tendrás acceso.`;
 
-/* TYPE */
-
+/* TYPEWRITER */
 let i=0;
 const typedText=document.getElementById("typedText");
 
@@ -360,19 +379,17 @@ function start(){
 
     video.play();
 
-    /* 👇 CUANDO TERMINA EL VIDEO */
     video.onended = ()=>{
 
-      const final = document.getElementById("finalContent");
-      final.style.opacity = "1";
-      final.style.transform = "translateY(0)";
+      const final=document.getElementById("finalContent");
+      final.style.opacity="1";
+      final.style.transform="translateY(0)";
 
-      /* EXTRA: animación por bloques */
-      const blocks = document.querySelectorAll(".block");
+      const blocks=document.querySelectorAll(".block");
 
-      blocks.forEach((el,i)=>{
+      blocks.forEach((b,i)=>{
         setTimeout(()=>{
-          el.classList.add("show");
+          b.classList.add("show");
         }, i*500);
       });
 
