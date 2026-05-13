@@ -3,191 +3,234 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>REBEL PARTY 2026</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
-body {
-  margin: 0;
-  background: #050505;
-  color: #eaeaea;
-  font-family: 'Barlow', sans-serif;
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#050505;
+  color:#f5f5f5;
+  font-family:'Barlow',sans-serif;
+  overflow-x:hidden;
+}
+
+/* FONDO GENERAL */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+  linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+  url('lugar.jpg') center/cover no-repeat;
+  opacity:.08;
+  z-index:-2;
 }
 
 /* CONTENEDOR */
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 40px 18px;
-  text-align: center;
+.container{
+  width:100%;
+  max-width:650px;
+  margin:auto;
+  padding:40px 22px 80px;
+  text-align:center;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
 }
 
 /* LOGO */
-#logo img {
-  width: clamp(220px, 65vw, 320px);
-  margin-bottom: 20px;
+#logo img{
+  width:clamp(220px,70vw,340px);
+  margin-bottom:30px;
 }
 
-/* TEXTO */
-#typedText {
-  min-height: 260px;
-  line-height: 1.6;
-  font-size: 15px;
-  white-space: pre-line;
+/* TEXTO INICIAL */
+#typedText{
+  font-size:1.18rem;
+  line-height:1.75;
+  white-space:pre-line;
+  min-height:330px;
+  font-weight:400;
 }
 
-/* BOTÓN */
-#continueBtn {
-  margin: 25px auto 0;
-  display: none;
-  background: #FFD400;
-  border: none;
-  color: black;
-  padding: 12px;
-  width: 100%;
-  max-width: 260px;
-  border-radius: 6px;
+/* BOTONES */
+.mainBtn{
+  margin:25px auto 0;
+  width:100%;
+  max-width:320px;
+  border:none;
+  border-radius:14px;
+  background:#FFD400;
+  color:#000;
+  padding:17px 20px;
+  font-size:1rem;
+  font-weight:700;
+  font-family:'Barlow',sans-serif;
+  letter-spacing:.5px;
 }
 
 /* ACERTIJO */
-#acertijo {
-  display: none;
-  margin-top: 30px;
-  text-align: left;
-  padding: 18px;
-  border-left: 5px solid #FFD400;
-  background: rgba(255,212,0,0.08);
-  border-radius: 8px;
+#acertijo{
+  display:none;
+  margin-top:35px;
+  text-align:left;
+  background:rgba(255,212,0,.08);
+  border:1px solid rgba(255,212,0,.25);
+  border-radius:22px;
+  padding:28px 24px;
+  backdrop-filter:blur(8px);
 }
 
-#acertijo p {
-  margin: 10px 0;
-  font-size: 14.5px;
+#acertijo p{
+  margin:14px 0;
+  font-size:1.05rem;
+  line-height:1.65;
+}
+
+/* TEXTO AYUDA */
+#instruction{
+  margin-top:28px;
+  text-align:center;
+  color:#FFD400;
+  font-size:.95rem;
+  letter-spacing:.5px;
 }
 
 /* INPUT */
-#codeInput {
-  margin-top: 15px;
-  width: 100%;
-  max-width: 260px;
-  margin-left: auto;
-  margin-right: auto;
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid #FFD400;
-  color: #FFD400;
-  font-size: 1.6rem;
-  letter-spacing: 8px;
-  text-align: center;
-  outline: none;
+#codeInput{
+  width:100%;
+  margin-top:18px;
+  background:transparent;
+  border:none;
+  border-bottom:2px solid #FFD400;
+  color:#FFD400;
+  text-align:center;
+  outline:none;
+  font-size:1.7rem;
+  font-family:'Barlow',sans-serif;
+  padding:12px;
+  letter-spacing:10px;
 }
 
-/* BOTÓN VALIDAR */
-#validateBtn {
-  margin: 18px auto 0;
-  display: block;
-  background: #FFD400;
-  border: none;
-  color: black;
-  padding: 12px;
-  width: 100%;
-  max-width: 260px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-/* FLASH */
-#flash {
-  position: fixed;
-  inset: 0;
-  background: white;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 999;
-}
-
-/* FINAL */
-#access {
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+/* PANTALLA FINAL */
+#finalScreen{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
 /* FONDO */
-#bg {
-  position: absolute;
-  inset: 0;
-  background: url('lugar.jpg') center/cover no-repeat;
-  filter: blur(4px) brightness(0.75);
-  transform: scale(1.05);
-}
-
-/* OVERLAY */
-#overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
+#bg{
+  position:absolute;
+  inset:0;
+  background:
+  linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+  url('lugar.jpg') center/cover no-repeat;
+  filter:blur(3px) brightness(.78);
+  transform:scale(1.04);
 }
 
 /* CONTENIDO FINAL */
-#accessContent {
-  position: relative;
-  text-align: center;
-  color: #FFD400;
-  max-width: 500px;
-  padding: 20px;
+#finalContent{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:700px;
+  padding:40px 24px 60px;
+  text-align:center;
+  color:white;
 }
 
-/* ENHORABUENA */
-#bigTitle {
-  font-size: 3rem;
-  transform: scale(3);
-  opacity: 0;
-  transition: all 1s ease;
+/* TITULO */
+#accessTitle{
+  font-size:3.2rem;
+  color:#FFD400;
+  font-weight:800;
+  letter-spacing:1px;
+  opacity:0;
+  transform:translateY(-70px) scale(.85);
+  transition:all .9s cubic-bezier(.18,1.2,.32,1);
 }
 
-#bigTitle.show {
-  transform: scale(1);
-  opacity: 1;
+/* SHOW */
+#accessTitle.show{
+  opacity:1;
+  transform:translateY(0) scale(1);
 }
 
 /* TEXTO FINAL */
-#finalText {
-  margin-top: 20px;
-  font-size: 15px;
-  line-height: 1.6;
-  white-space: pre-line;
+#finalText{
+  margin-top:28px;
+  white-space:pre-line;
+  line-height:1.9;
+  font-size:1.18rem;
+  font-weight:400;
 }
 
-/* CALENDARIO */
-#calendar {
-  margin-top: 20px;
+/* REBEL PARTY */
+.highlight{
+  font-size:2.2rem;
+  font-weight:800;
+  color:#FFD400;
+  margin:18px 0;
 }
 
-.month {
-  font-weight: 600;
-  margin-bottom: 10px;
+/* INFO */
+.eventInfo{
+  margin-top:20px;
+  font-size:1.18rem;
+  line-height:1.8;
 }
 
-.days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  font-size: 13px;
+/* EXTRA */
+.small{
+  opacity:.92;
+  font-size:1rem;
 }
 
-.days span {
-  padding: 6px;
+/* FLASH */
+#flash{
+  position:fixed;
+  inset:0;
+  background:white;
+  opacity:0;
+  pointer-events:none;
+  z-index:999;
+  transition:opacity .25s ease;
 }
 
-.highlight {
-  border: 2px solid #FFD400;
-  border-radius: 50%;
+/* MOBILE */
+@media(max-width:480px){
+
+  #typedText{
+    font-size:1.1rem;
+    min-height:350px;
+  }
+
+  #accessTitle{
+    font-size:2.4rem;
+  }
+
+  #finalText{
+    font-size:1.08rem;
+  }
+
+  .highlight{
+    font-size:1.8rem;
+  }
+
 }
 
 </style>
@@ -199,180 +242,232 @@ body {
 
 <div class="container" id="main">
 
+<!-- LOGO -->
 <div id="logo">
-<img src="logo.png">
+<img src="logo.png" alt="logo">
 </div>
 
+<!-- TEXTO -->
 <div id="typedText"></div>
 
-<button id="continueBtn">CONTINUAR</button>
+<!-- BOTON -->
+<button class="mainBtn" id="continueBtn" style="display:none;">
+¡VAMOS A POR ELLO!
+</button>
 
+<!-- ACERTIJO -->
 <div id="acertijo">
 
-<p><b>S</b>i cambiaste, no fue por encajar. Fue por decidir.</p>
-<p><b>O</b>lvidaste lo que otros pensaban… y empezaste a escucharte.</p>
-<p><b>Y</b> eso, no todo el mundo se atreve a hacerlo.</p>
-<p><b>R</b>ompiste con lo que no te representaba.</p>
-<p><b>E</b>legiste verte como realmente querías.</p>
-<p><b>B</b>uscaste algo más que lo típico.</p>
-<p><b>E</b>l cambio no fue casualidad.</p>
-<p><b>L</b>o hiciste porque sabías que era para ti.</p>
+<p><b>A</b>lgunas personas esperan el momento perfecto.</p>
 
-<p style="margin-top:15px; color:#FFD400;">Introduce la palabra secreta</p>
+<p><b>C</b>ambiar requiere valentía.</p>
 
-<input type="text" id="codeInput" maxlength="8" placeholder="________">
+<p><b>T</b>ú decidiste dar el paso.</p>
 
-<button id="validateBtn">VALIDAR</button>
+<p><b>I</b>maginaste una nueva versión de ti.</p>
+
+<p><b>T</b>odo eso merece celebrarse.</p>
+
+<p><b>U</b>na noche especial te espera.</p>
+
+<p><b>D</b>isfruta de la REBEL PARTY.</p>
+
+<div id="instruction">
+Introduce la palabra secreta
+</div>
+
+<input type="text" id="codeInput" maxlength="7" placeholder="_______">
+
+<button class="mainBtn" id="validateBtn">
+PROBAR SUERTE
+</button>
 
 </div>
 
 </div>
 
 <!-- FINAL -->
-<div id="access">
+<div id="finalScreen">
+
 <div id="bg"></div>
-<div id="overlay"></div>
 
-<div id="accessContent">
+<div id="finalContent">
 
-<h1 id="bigTitle">ENHORABUENA</h1>
+<h1 id="accessTitle">
+ACCESO DESBLOQUEADO
+</h1>
 
 <div id="finalText"></div>
 
-<div id="eventBlock" style="display:none;">
-
-<div id="calendar">
-<div class="month">OCTUBRE 2026</div>
-<div class="days">
-<span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
-<span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
-<span>5</span><span>6</span><span>7</span><span>8</span><span class="highlight">9</span>
-<span>10</span><span>11</span>
-<span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
-<span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
-<span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
-</div>
 </div>
 
-<p id="countdown"></p>
-
-<p>
-📅 VIERNES 9 DE OCTUBRE DE 2026<br>
-📍 BARBILLON, MARBELLA<br>
-🎉 <a href="https://maps.google.com?q=Barbillon+Marbella" target="_blank" style="color:#FFD400;">VER UBICACIÓN</a>
-</p>
-
-</div>
-
-</div>
 </div>
 
 <script>
 
-const text = `No todos llegan hasta aquí.
+/* TEXTO INICIAL */
 
-Ni todos se atreven.
+const text = `No cualquiera recibe esto.
 
-Durante un tiempo hemos estado observando.
-No buscamos a cualquiera.
+Pero antes de darte acceso a algo muy especial, tendrás que superar un último reto.
 
-Buscamos a los que deciden.
-A los que no se conforman.
-A los que se atreven a verse como realmente quieren.
+Solo quienes sepan mirar más allá descubrirán la clave, que está escondida en el siguiente mensaje.
 
-Si estás aquí… ya has sido más atrevido que el resto.
+Encuéntrala y tendrás acceso.`;
 
-Pero aún queda un paso.
 
-Demuestra que sigues viendo lo que otros no ven`;
+/* TEXTO FINAL */
 
-const finalMessage = `No todo el mundo llega hasta aquí.
-No todo el mundo se atreve.
+const finalMessage = `¡Te damos la bienvenida a la experiencia más exclusiva de Rebel Noses!
 
-Pero tú sí.
+Porque las mejores historias merecen celebrarse juntas.
 
-Has decidido verte como realmente querías.
+Estás oficialmente invitada/o a la`;
 
-Tienes tu sitio asegurado en la REBEL PARTY 2026.`;
-
-let i = 0;
 const typedText = document.getElementById("typedText");
 const continueBtn = document.getElementById("continueBtn");
-const acertijo = document.getElementById("acertijo");
-const input = document.getElementById("codeInput");
 
-const access = document.getElementById("access");
-const flash = document.getElementById("flash");
-const main = document.getElementById("main");
+let i = 0;
 
-const bigTitle = document.getElementById("bigTitle");
-const finalText = document.getElementById("finalText");
+/* TYPEWRITER */
 
 function typeWriter(){
+
   if(i < text.length){
+
     typedText.innerHTML += text.charAt(i);
+
     i++;
-    setTimeout(typeWriter, 34);
+
+    setTimeout(typeWriter, 38);
+
   } else {
-    setTimeout(()=> continueBtn.style.display="block", 1000);
+
+    setTimeout(()=>{
+      continueBtn.style.display = "block";
+    },700);
+
   }
+
 }
 
 window.onload = typeWriter;
 
-continueBtn.onclick = () => {
-  acertijo.style.display = "block";
+
+/* CONTINUAR */
+
+continueBtn.onclick = ()=>{
+
+  document.getElementById("acertijo").style.display = "block";
+
   continueBtn.style.display = "none";
+
 };
 
-document.getElementById("validateBtn").onclick = () => {
-  if(input.value.toUpperCase() === "SOYREBEL"){
+
+/* VALIDAR */
+
+document.getElementById("validateBtn").onclick = ()=>{
+
+  const value = document
+  .getElementById("codeInput")
+  .value
+  .toUpperCase();
+
+  if(value === "ACTITUD"){
+
     showFinal();
+
   } else {
-    input.value = "";
+
+    document.getElementById("codeInput").value = "";
+
   }
+
 };
+
+
+/* FINAL */
 
 function showFinal(){
 
-  main.style.opacity = "0";
+  const flash = document.getElementById("flash");
 
   flash.style.opacity = "1";
-  setTimeout(()=> flash.style.opacity="0",200);
 
   setTimeout(()=>{
-    access.style.display = "flex";
+    flash.style.opacity = "0";
+  },250);
+
+  setTimeout(()=>{
+
+    document.getElementById("finalScreen").style.display = "flex";
 
     setTimeout(()=>{
-      bigTitle.classList.add("show");
-    },300);
+
+      document
+      .getElementById("accessTitle")
+      .classList
+      .add("show");
+
+    },250);
 
     let j = 0;
+
+    const finalText =
+    document.getElementById("finalText");
+
     function writeFinal(){
+
       if(j < finalMessage.length){
+
         finalText.innerHTML += finalMessage.charAt(j);
+
         j++;
-        setTimeout(writeFinal, 28);
+
+        setTimeout(writeFinal,25);
+
       } else {
 
         setTimeout(()=>{
-          document.getElementById("eventBlock").style.display = "block";
 
-          const eventDate = new Date("October 9, 2026");
-          const today = new Date();
-          const diff = eventDate - today;
-          const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+          finalText.innerHTML += `
 
-          document.getElementById("countdown").innerText =
-            "Faltan " + days + " días";
+<div class="highlight">
+REBEL PARTY
+</div>
 
-        }, 800);
+<div class="eventInfo">
+
+📅 Viernes, 9 de octubre<br>
+
+📍 Barbillon Marbella<br>
+
+🕘 21:00h<br><br>
+
+<span class="small">
+Se ruega puntualidad.<br>
+Dress code: actitud obligatoria. Lo demás es opcional.
+</span>
+
+<br><br>
+
+🎉 Música, sorpresas y una noche creada para nuestros pacientes más especiales.
+
+</div>
+
+`;
+
+        },400);
+
       }
+
     }
 
-    setTimeout(writeFinal, 1200);
+    setTimeout(writeFinal,1100);
 
-  },400);
+  },300);
+
 }
 
 </script>
